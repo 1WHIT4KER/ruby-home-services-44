@@ -9,52 +9,40 @@ import { Card, CardContent } from "@/components/ui/card";
 
 const reviews = [
   {
-    name: "Kathy B.",
+    name: "Meg B.",
     rating: 5,
-    text: "Excellent service! They did a fantastic job on my windows and screens. Very professional and thorough. I highly recommend them.",
-    date: "March 2024"
+    text: "They showed up when they said they would, did an excellent job making my windows sparkling clean and were such lovely guys, polite, friendly and professional!",
+    date: "2024"
   },
   {
-    name: "John D.",
+    name: "Jordan M.",
     rating: 5,
-    text: "Great service! They were on time, professional, and did an amazing job on my windows. I will definitely use them again.",
-    date: "March 2024"
+    text: "Reuben and has crew did an excellent job! They were very efficient and finished quickly! They added the sparkle I needed. ✨",
+    date: "2024"
   },
   {
-    name: "Mary S.",
+    name: "Merrit W.",
     rating: 5,
-    text: "They did an excellent job on my windows. Very professional and courteous. I highly recommend them.",
-    date: "February 2024"
+    text: "They were prompt and courteous and guaranteed their work. I will be using them again and again!",
+    date: "2024"
   },
   {
-    name: "Robert M.",
+    name: "Dave B.",
     rating: 5,
-    text: "Outstanding service! My windows have never looked better. The team was professional, efficient, and thorough.",
-    date: "February 2024"
+    text: "Finally we have lights that look professional and stunning! And they put them up really swiftly. Very polite well mannered young men and I would hire them again in a heart beat!!👌🏻I have recommended them to my neighbors and friend:)",
+    date: "2024"
   },
   {
-    name: "Patricia H.",
+    name: "Erin H.",
     rating: 5,
-    text: "Fantastic work! They removed years of hard water stains from my windows. Very pleased with the results.",
-    date: "January 2024"
+    text: "They we're prompt and did a great job! I will use them again.",
+    date: "2024"
   },
   {
-    name: "James W.",
+    name: "Catia N.",
     rating: 5,
-    text: "Excellent service and results! The team was professional and did a great job on my windows. Will definitely use them again.",
-    date: "January 2024"
-  },
-  {
-    name: "Linda K.",
-    rating: 5,
-    text: "Very satisfied with the service. They were prompt, professional, and did an excellent job cleaning my windows.",
-    date: "December 2023"
-  },
-  {
-    name: "William P.",
-    rating: 5,
-    text: "Great experience! The team was professional and thorough. My windows look amazing.",
-    date: "December 2023"
+    text: "Finally we have lights that look professional! I have recommended them to my neighbors and friend:)",
+    date: "2024"
   }
 ];
 
