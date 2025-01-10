@@ -1,19 +1,19 @@
 const services = [
   {
     title: "PANES",
-    image: "https://images.unsplash.com/photo-1439337153520-7082a56a81f4", // Clear glass roof image
+    image: "https://images.unsplash.com/photo-1497366216548-37526070297c", // Window pane cleaning image
   },
   {
     title: "FRAMES",
-    image: "https://images.unsplash.com/photo-1483058712412-4245e9b90334", // Silver iMac image
+    image: "https://images.unsplash.com/photo-1600607686527-6fb886090705", // Window frame image
   },
   {
     title: "TRACKS",
-    image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7", // Software/web code image
+    image: "https://images.unsplash.com/photo-1580741569354-f67ff23b11ce", // Window track/rail image
   },
   {
     title: "HARD WATER",
-    image: "https://images.unsplash.com/photo-1433086966358-54859d0ed716", // Concrete bridge and waterfalls
+    image: "https://images.unsplash.com/photo-1585938761970-da8e8d447d63", // Water spots on glass image
   },
 ];
 
