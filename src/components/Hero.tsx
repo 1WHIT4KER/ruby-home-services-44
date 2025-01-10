@@ -9,7 +9,7 @@ export const Hero = () => {
         className="absolute inset-0 w-full h-full object-cover"
       />
       <div className="absolute inset-0 bg-black/20" />
-      <div className="relative container mx-auto pt-40 px-4">
+      <div className="relative container mx-auto pt-40 px-4 flex flex-col items-center text-center">
         <h1 className="text-white font-rubik font-bold text-7xl md:text-8xl mb-4">
           DIRTY WINDOWS?
         </h1>
