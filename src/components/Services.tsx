@@ -1,19 +1,19 @@
 const services = [
   {
     title: "PANES",
-    image: "", // Placeholder for new image
+    image: "https://images.unsplash.com/photo-1439337153520-7082a56a81f4", // Clear glass roof image
   },
   {
     title: "FRAMES",
-    image: "", // Placeholder for new image
+    image: "https://images.unsplash.com/photo-1483058712412-4245e9b90334", // Silver iMac image
   },
   {
     title: "TRACKS",
-    image: "", // Placeholder for new image
+    image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7", // Software/web code image
   },
   {
     title: "HARD WATER",
-    image: "", // Placeholder for new image
+    image: "https://images.unsplash.com/photo-1433086966358-54859d0ed716", // Concrete bridge and waterfalls
   },
 ];
 
