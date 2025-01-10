@@ -11,7 +11,7 @@ export const Navbar = () => {
             className="h-16"
           />
         </div>
-        <div className="absolute right-0 top-0">
+        <div className="absolute right-4 top-4">
           <Button 
             className="bg-ruby-red hover:bg-ruby-red/90 text-white rounded-full px-8"
             onClick={() => window.location.href = "tel:+13853523406"}
