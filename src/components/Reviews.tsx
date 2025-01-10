@@ -81,8 +81,8 @@ export const Reviews = () => {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="hidden md:flex absolute -left-4 bg-black/20 hover:bg-black/40 transition-colors w-10 h-10" />
-          <CarouselNext className="hidden md:flex absolute -right-4 bg-black/20 hover:bg-black/40 transition-colors w-10 h-10" />
+          <CarouselPrevious className="hidden md:flex absolute -left-12 opacity-20 hover:opacity-100 transition-opacity w-10 h-10 bg-transparent hover:bg-transparent" />
+          <CarouselNext className="hidden md:flex absolute -right-12 opacity-20 hover:opacity-100 transition-opacity w-10 h-10 bg-transparent hover:bg-transparent" />
         </Carousel>
       </div>
     </section>
