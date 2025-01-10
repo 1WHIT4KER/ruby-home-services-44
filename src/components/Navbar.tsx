@@ -8,7 +8,7 @@ export const Navbar = () => {
           <img 
             src="/lovable-uploads/77ce0bf0-17d7-43e2-b81f-3a314b8484c0.png" 
             alt="Ruby - All Things Home-y"
-            className="h-16"
+            className="h-20" // Increased from h-16 to h-20
           />
         </div>
         <div className="absolute right-4 top-4">
