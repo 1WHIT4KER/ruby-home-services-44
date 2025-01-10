@@ -42,7 +42,7 @@ const reviews = [
 
 export const Reviews = () => {
   return (
-    <section className="py-20 bg-ruby-light">
+    <section className="py-20 bg-ruby-light relative">
       <div className="container mx-auto px-4">
         <h2 className="text-4xl font-rubik font-bold text-center mb-16">
           REVIEWS
@@ -52,7 +52,7 @@ export const Reviews = () => {
             align: "start",
             loop: true,
           }}
-          className="w-full max-w-5xl mx-auto"
+          className="w-full max-w-5xl mx-auto relative"
         >
           <CarouselContent className="-ml-2 md:-ml-4">
             {reviews.map((review, index) => (
@@ -81,8 +81,8 @@ export const Reviews = () => {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="hidden md:flex" />
-          <CarouselNext className="hidden md:flex" />
+          <CarouselPrevious className="hidden md:flex absolute -left-4 bg-black/20 hover:bg-black/40 transition-colors w-10 h-10" />
+          <CarouselNext className="hidden md:flex absolute -right-4 bg-black/20 hover:bg-black/40 transition-colors w-10 h-10" />
         </Carousel>
       </div>
     </section>
