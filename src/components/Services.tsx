@@ -1,22 +1,18 @@
 const services = [
   {
     title: "PANES",
-    description: "Crystal clear window panes that sparkle",
     image: "", // Placeholder for new image
   },
   {
     title: "FRAMES",
-    description: "Clean and maintained window frames",
     image: "", // Placeholder for new image
   },
   {
     title: "TRACKS",
-    description: "Smooth operating window tracks",
     image: "", // Placeholder for new image
   },
   {
     title: "HARD WATER",
-    description: "Hard water stain removal",
     image: "", // Placeholder for new image
   },
 ];
@@ -40,8 +36,7 @@ export const Services = () => {
                   />
                 )}
               </div>
-              <h3 className="font-rubik font-bold text-xl mb-2">{service.title}</h3>
-              <p className="font-nunito text-gray-600">{service.description}</p>
+              <h3 className="font-rubik font-bold text-xl">{service.title}</h3>
             </div>
           ))}
         </div>
