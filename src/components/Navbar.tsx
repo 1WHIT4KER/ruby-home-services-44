@@ -10,7 +10,7 @@ export const Navbar = () => {
         </div>
         <Button 
           className="bg-ruby-red hover:bg-ruby-red/90 text-white rounded-full px-8"
-          onClick={() => window.location.href = "tel:+1234567890"}
+          onClick={() => window.location.href = "tel:+13853523406"}
         >
           CALL US
         </Button>
