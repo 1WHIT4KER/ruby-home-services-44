@@ -37,12 +37,6 @@ const reviews = [
     rating: 5,
     text: "They we're prompt and did a great job! I will use them again.",
     date: "2024"
-  },
-  {
-    name: "Catia N.",
-    rating: 5,
-    text: "Finally we have lights that look professional! I have recommended them to my neighbors and friend:)",
-    date: "2024"
   }
 ];
 
