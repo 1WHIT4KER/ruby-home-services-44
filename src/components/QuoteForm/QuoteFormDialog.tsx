@@ -1,7 +1,7 @@
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { useState } from "react";
+import { useQuoteForm } from "@/hooks/useQuoteForm";
+import { ExitConfirmationDialog } from "./ExitConfirmationDialog";
 import WelcomePage from "./steps/WelcomePage";
 import PersonalInfoPage from "./steps/PersonalInfoPage";
 import AddressPage from "./steps/AddressPage";
@@ -12,7 +12,6 @@ import SchedulingPage from "./steps/SchedulingPage";
 import ReviewOfferPage from "./steps/ReviewOfferPage";
 import SummaryPage from "./steps/SummaryPage";
 import ThankYouPage from "./steps/ThankYouPage";
-import { useToast } from "@/hooks/use-toast";
 
 interface QuoteFormDialogProps {
   open: boolean;
@@ -20,45 +19,15 @@ interface QuoteFormDialogProps {
 }
 
 export const QuoteFormDialog = ({ open, onOpenChange }: QuoteFormDialogProps) => {
-  const [step, setStep] = useState(0);
+  const { step, setStep, formData, setFormData, resetForm } = useQuoteForm();
   const [showExitDialog, setShowExitDialog] = useState(false);
-  const { toast } = useToast();
-  
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    phone: "",
-    email: "",
-    address: "",
-    wantsInstantQuote: true,
-    selectedContract: "",
-    screenCleaning: false,
-    exteriorPowerWashing: false,
-    gutterCleaning: false,
-    appointmentDate: null as Date | null,
-    wantsReviewDiscount: false
-  });
 
   const handleExit = () => {
     setShowExitDialog(true);
   };
 
   const confirmExit = () => {
-    setFormData({
-      firstName: "",
-      lastName: "",
-      phone: "",
-      email: "",
-      address: "",
-      wantsInstantQuote: true,
-      selectedContract: "",
-      screenCleaning: false,
-      exteriorPowerWashing: false,
-      gutterCleaning: false,
-      appointmentDate: null,
-      wantsReviewDiscount: false
-    });
-    setStep(0);
+    resetForm();
     setShowExitDialog(false);
     onOpenChange(false);
   };
@@ -135,20 +104,11 @@ export const QuoteFormDialog = ({ open, onOpenChange }: QuoteFormDialogProps) =>
         </DialogContent>
       </Dialog>
 
-      <AlertDialog open={showExitDialog} onOpenChange={setShowExitDialog}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure you want to exit?</AlertDialogTitle>
-            <AlertDialogDescription>
-              All your progress will be lost. This action cannot be undone.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel onClick={() => setShowExitDialog(false)}>Continue</AlertDialogCancel>
-            <AlertDialogAction onClick={confirmExit}>Exit</AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+      <ExitConfirmationDialog
+        open={showExitDialog}
+        onOpenChange={setShowExitDialog}
+        onConfirm={confirmExit}
+      />
     </>
   );
 };
