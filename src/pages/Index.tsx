@@ -8,10 +8,15 @@ import { useState } from "react";
 const Index = () => {
   const [quoteFormOpen, setQuoteFormOpen] = useState(false);
 
+  const handleQuoteClick = () => {
+    console.log("Opening quote form...");
+    setQuoteFormOpen(true);
+  };
+
   return (
     <main className="min-h-screen">
-      <Navbar />
-      <Hero />
+      <Navbar onQuoteClick={handleQuoteClick} />
+      <Hero onQuoteClick={handleQuoteClick} />
       <Services />
       <Reviews />
       <QuoteFormDialog 

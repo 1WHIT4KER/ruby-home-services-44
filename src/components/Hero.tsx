@@ -1,6 +1,10 @@
 import { Button } from "./ui/button";
 
-export const Hero = () => {
+interface HeroProps {
+  onQuoteClick?: () => void;
+}
+
+export const Hero = ({ onQuoteClick }: HeroProps) => {
   return (
     <div className="relative min-h-screen">
       <img
@@ -18,10 +22,7 @@ export const Hero = () => {
         </h2>
         <Button 
           className="bg-ruby-red hover:bg-ruby-red/90 text-white rounded-full px-8 py-6 text-lg"
-          onClick={() => {
-            // Add quote form logic here
-            console.log("Get a quote clicked");
-          }}
+          onClick={onQuoteClick}
         >
           GET A QUOTE
         </Button>
