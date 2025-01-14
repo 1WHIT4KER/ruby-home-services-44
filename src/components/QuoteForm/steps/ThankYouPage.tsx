@@ -76,7 +76,7 @@ ${formData.gutterCleaning ? '- Gutter Cleaning' : ''}
             Expect our technician on {format(formData.appointmentDate, "PPpp")}
           </p>
           <p className="text-gray-600">
-            We'll reach out to remind you of your service two days and two hours beforehand
+            We'll reach out to confirm your servicing two days and two hours ahead of time
           </p>
         </div>
       )}
