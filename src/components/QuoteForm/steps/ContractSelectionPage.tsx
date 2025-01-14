@@ -13,7 +13,7 @@ const ContractSelectionPage = ({ formData, setFormData, onNext, onPrevious }: Co
   return (
     <div className="space-y-6">
       <div className="space-y-2 text-center">
-        <h2 className="text-2xl font-semibold">Choose Your Service Plan</h2>
+        <h2 className="text-2xl font-semibold text-ruby-red">Choose Your Service Plan</h2>
         <p className="text-muted-foreground">
           Select the perfect maintenance plan that suits your needs
         </p>

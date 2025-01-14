@@ -10,7 +10,7 @@ interface ThankYouPageProps {
 const ThankYouPage = ({ formData, onClose }: ThankYouPageProps) => {
   return (
     <div className="space-y-6 text-center">
-      <h2 className="text-2xl font-semibold">Thanks!</h2>
+      <h2 className="text-2xl font-semibold text-ruby-red">Thanks!</h2>
       {formData.appointmentDate && (
         <p className="text-lg">
           Expect our technician on {formData.appointmentDate.toLocaleString()}

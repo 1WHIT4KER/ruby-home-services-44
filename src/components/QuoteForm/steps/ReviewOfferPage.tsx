@@ -13,7 +13,7 @@ const ReviewOfferPage = ({ formData, setFormData, onNext, onPrevious }: ReviewOf
   return (
     <div className="space-y-6">
       <div className="space-y-2 text-center">
-        <h2 className="text-2xl font-semibold">Want to help us out with a review?</h2>
+        <h2 className="text-2xl font-semibold text-ruby-red">Want to help us out with a review?</h2>
         <p className="text-muted-foreground">
           We'll knock off $20 if you write us a review after our service (we'll send you a link once we've finished up at your place)...interested?
         </p>

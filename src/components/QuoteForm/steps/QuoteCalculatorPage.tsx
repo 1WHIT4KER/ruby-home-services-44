@@ -13,7 +13,7 @@ const QuoteCalculatorPage = ({ formData, setFormData, onNext, onPrevious }: Quot
   return (
     <div className="space-y-6">
       <div className="space-y-2 text-center">
-        <h2 className="text-2xl font-semibold">Instant Quote Calculator</h2>
+        <h2 className="text-2xl font-semibold text-ruby-red">Instant Quote Calculator</h2>
         <p className="text-muted-foreground">
           Something that sets us apart from other Home Service companies...find out how much our service will cost you right away! Professional service at unbeatable prices...and all without taxes or hidden fees!
         </p>

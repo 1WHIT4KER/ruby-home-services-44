@@ -25,7 +25,7 @@ const AddressPage = ({ formData, setFormData, onNext, onPrevious }: AddressPageP
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="space-y-2 text-center">
-        <h2 className="text-2xl font-semibold">How far are you?</h2>
+        <h2 className="text-2xl font-semibold text-ruby-red">How far are you?</h2>
         <p className="text-muted-foreground">
           Proudly servicing Salt Lake and Utah counties.
         </p>

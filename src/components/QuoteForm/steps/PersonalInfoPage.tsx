@@ -23,7 +23,7 @@ const PersonalInfoPage = ({ formData, setFormData, onNext, onPrevious }: Persona
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="space-y-2 text-center">
-        <h2 className="text-2xl font-semibold">Let's get to know you!</h2>
+        <h2 className="text-2xl font-semibold text-ruby-red">Let's get to know you!</h2>
         <p className="text-muted-foreground">
           Don't worry, we value privacy as much as you do...your info will never be shared.
         </p>

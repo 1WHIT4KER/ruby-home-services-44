@@ -13,7 +13,7 @@ const SchedulingPage = ({ formData, setFormData, onNext, onPrevious }: Schedulin
   return (
     <div className="space-y-6">
       <div className="space-y-2 text-center">
-        <h2 className="text-2xl font-semibold">When can we stop by?</h2>
+        <h2 className="text-2xl font-semibold text-ruby-red">When can we stop by?</h2>
         <p className="text-muted-foreground">
           Say goodbye to stressful scheduling...use this scheduler to pick the open time slot that works best for you!
         </p>

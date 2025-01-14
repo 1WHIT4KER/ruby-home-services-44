@@ -8,7 +8,11 @@ interface SummaryPageProps {
     lastName: string;
     phone: string;
     email: string;
-    address: string;
+    streetAddress: string;
+    unit: string;
+    city: string;
+    state: string;
+    homeType: "single" | "multi" | "";
     wantsInstantQuote: boolean;
     selectedContract: string;
     screenCleaning: boolean;
@@ -31,7 +35,7 @@ const SummaryPage = ({ formData, onNext, onPrevious }: SummaryPageProps) => {
         last_name: formData.lastName,
         phone: formData.phone,
         email: formData.email,
-        address: formData.address,
+        address: `${formData.streetAddress}${formData.unit ? `, ${formData.unit}` : ''}, ${formData.city}, ${formData.state}`,
         wants_instant_quote: formData.wantsInstantQuote,
         selected_contract: formData.selectedContract,
         screen_cleaning: formData.screenCleaning,
@@ -57,7 +61,7 @@ const SummaryPage = ({ formData, onNext, onPrevious }: SummaryPageProps) => {
   return (
     <div className="space-y-6">
       <div className="space-y-2 text-center">
-        <h2 className="text-2xl font-semibold">Review Your Information</h2>
+        <h2 className="text-2xl font-semibold text-ruby-red">Review Your Information</h2>
       </div>
 
       <div className="space-y-4">
@@ -66,7 +70,8 @@ const SummaryPage = ({ formData, onNext, onPrevious }: SummaryPageProps) => {
           <p>Name: {formData.firstName} {formData.lastName}</p>
           <p>Phone: {formData.phone}</p>
           {formData.email && <p>Email: {formData.email}</p>}
-          <p>Address: {formData.address}</p>
+          <p>Address: {formData.streetAddress}{formData.unit ? `, ${formData.unit}` : ''}, {formData.city}, {formData.state}</p>
+          {formData.homeType && <p>Home Type: {formData.homeType === 'single' ? 'Single Story' : 'Multi Story'}</p>}
         </div>
 
         <div className="space-y-2">

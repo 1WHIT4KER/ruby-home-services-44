@@ -20,7 +20,7 @@ const AdditionalServicesPage = ({ formData, setFormData, onNext, onPrevious }: A
   return (
     <div className="space-y-6">
       <div className="space-y-2 text-center">
-        <h2 className="text-2xl font-semibold">Additional Services</h2>
+        <h2 className="text-2xl font-semibold text-ruby-red">Additional Services</h2>
         <p className="text-muted-foreground">
           Enhance your service with these add-ons
         </p>
