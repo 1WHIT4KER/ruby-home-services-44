@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { format } from "date-fns";
 
 interface SummaryPageProps {
   formData: {
@@ -60,42 +62,74 @@ const SummaryPage = ({ formData, onNext, onPrevious }: SummaryPageProps) => {
 
   return (
     <div className="space-y-6">
-      <div className="space-y-2 text-center">
+      <div className="text-center">
         <h2 className="text-2xl font-semibold text-ruby-red">Review Your Information</h2>
       </div>
 
-      <div className="space-y-4">
-        <div className="space-y-2">
-          <h3 className="font-medium">Personal Information</h3>
-          <p>Name: {formData.firstName} {formData.lastName}</p>
-          <p>Phone: {formData.phone}</p>
-          {formData.email && <p>Email: {formData.email}</p>}
-          <p>Address: {formData.streetAddress}{formData.unit ? `, ${formData.unit}` : ''}, {formData.city}, {formData.state}</p>
-          {formData.homeType && <p>Home Type: {formData.homeType === 'single' ? 'Single Story' : 'Multi Story'}</p>}
-        </div>
+      <Card className="bg-white shadow-md max-h-[60vh] overflow-y-auto">
+        <CardHeader className="border-b pb-4">
+          <CardTitle className="text-lg font-medium">Service Details</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6 pt-6">
+          <div className="space-y-4">
+            <section className="space-y-2">
+              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Personal Information</h3>
+              <div className="grid grid-cols-2 gap-2 text-sm">
+                <div>
+                  <span className="block text-muted-foreground">Name</span>
+                  <span>{formData.firstName} {formData.lastName}</span>
+                </div>
+                <div>
+                  <span className="block text-muted-foreground">Phone</span>
+                  <span>{formData.phone}</span>
+                </div>
+                {formData.email && (
+                  <div className="col-span-2">
+                    <span className="block text-muted-foreground">Email</span>
+                    <span>{formData.email}</span>
+                  </div>
+                )}
+                <div className="col-span-2">
+                  <span className="block text-muted-foreground">Address</span>
+                  <span>{formData.streetAddress}{formData.unit ? `, ${formData.unit}` : ''}, {formData.city}, {formData.state}</span>
+                </div>
+                {formData.homeType && (
+                  <div className="col-span-2">
+                    <span className="block text-muted-foreground">Home Type</span>
+                    <span>{formData.homeType === 'single' ? 'Single Story' : 'Multi Story'}</span>
+                  </div>
+                )}
+              </div>
+            </section>
 
-        <div className="space-y-2">
-          <h3 className="font-medium">Selected Services</h3>
-          {formData.screenCleaning && <p>• Screen Cleaning ($4 per screen)</p>}
-          {formData.exteriorPowerWashing && <p>• Exterior Power Washing ($150)</p>}
-          {formData.gutterCleaning && <p>• Gutter Cleaning ($100-$200)</p>}
-        </div>
+            <section className="space-y-2">
+              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Selected Services</h3>
+              <div className="space-y-1 text-sm">
+                {formData.screenCleaning && <p>• Screen Cleaning ($4 per screen)</p>}
+                {formData.exteriorPowerWashing && <p>• Exterior Power Washing ($150)</p>}
+                {formData.gutterCleaning && <p>• Gutter Cleaning ($100-$200)</p>}
+              </div>
+            </section>
 
-        <div className="space-y-2">
-          <h3 className="font-medium">Discounts</h3>
-          {formData.wantsReviewDiscount && (
-            <p>• Review Discount: $20 off your service for writing a review</p>
-          )}
-          {/* Space for future discounts */}
-        </div>
+            <section className="space-y-2">
+              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Discounts</h3>
+              <div className="space-y-1 text-sm">
+                {formData.wantsReviewDiscount && (
+                  <p>• Review Discount: $20 off your service for writing a review</p>
+                )}
+                {/* Space for future discounts */}
+              </div>
+            </section>
 
-        {formData.appointmentDate && (
-          <div className="space-y-2">
-            <h3 className="font-medium">Appointment</h3>
-            <p>{formData.appointmentDate.toLocaleString()}</p>
+            {formData.appointmentDate && (
+              <section className="space-y-2">
+                <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Appointment</h3>
+                <p className="text-sm">{format(formData.appointmentDate, "MMMM d, yyyy 'at' h:mm a")}</p>
+              </section>
+            )}
           </div>
-        )}
-      </div>
+        </CardContent>
+      </Card>
 
       <p className="text-sm text-center text-muted-foreground">
         We'll collect payment after we've completed the service
