@@ -81,17 +81,19 @@ const SummaryPage = ({ formData, onNext, onPrevious }: SummaryPageProps) => {
           {formData.gutterCleaning && <p>• Gutter Cleaning ($100-$200)</p>}
         </div>
 
+        <div className="space-y-2">
+          <h3 className="font-medium">Discounts</h3>
+          {formData.wantsReviewDiscount && (
+            <p>• Review Discount: $20 off your service for writing a review</p>
+          )}
+          {/* Space for future discounts */}
+        </div>
+
         {formData.appointmentDate && (
           <div className="space-y-2">
             <h3 className="font-medium">Appointment</h3>
             <p>{formData.appointmentDate.toLocaleString()}</p>
           </div>
-        )}
-
-        {formData.wantsReviewDiscount && (
-          <p className="text-sm text-muted-foreground">
-            You'll receive a $20 discount for writing a review after the service.
-          </p>
         )}
       </div>
 
