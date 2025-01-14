@@ -36,8 +36,7 @@ export const QuoteFormDialog = ({ open, onOpenChange }: QuoteFormDialogProps) =>
         }
       }}>
         <DialogContent className="sm:max-w-[600px] h-[80vh] overflow-y-auto">
-          <div className="space-y-6">
-            <FormProgress currentStep={step} totalSteps={totalSteps} />
+          <div className="flex flex-col h-full">
             <FormSteps 
               step={step}
               setStep={setStep}
@@ -45,6 +44,9 @@ export const QuoteFormDialog = ({ open, onOpenChange }: QuoteFormDialogProps) =>
               setFormData={setFormData}
               onClose={() => onOpenChange(false)}
             />
+            <div className="mt-auto pt-6">
+              <FormProgress currentStep={step} totalSteps={totalSteps} />
+            </div>
           </div>
         </DialogContent>
       </Dialog>
