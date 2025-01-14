@@ -27,7 +27,7 @@ const AddressPage = ({ formData, setFormData, onNext, onPrevious }: AddressPageP
       <div className="space-y-2 text-center">
         <h2 className="text-2xl font-semibold text-ruby-red">How far are you?</h2>
         <p className="text-muted-foreground">
-          Proudly servicing Salt Lake and Utah counties.
+          We currently serve Utah and Salt Lake counties!
         </p>
       </div>
 
