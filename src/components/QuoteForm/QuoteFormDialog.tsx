@@ -2,7 +2,6 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { useState } from "react";
-import { X } from "lucide-react";
 import WelcomePage from "./steps/WelcomePage";
 import PersonalInfoPage from "./steps/PersonalInfoPage";
 import AddressPage from "./steps/AddressPage";
@@ -132,14 +131,6 @@ export const QuoteFormDialog = ({ open, onOpenChange }: QuoteFormDialogProps) =>
         }
       }}>
         <DialogContent className="sm:max-w-[600px] h-[80vh] overflow-y-auto">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="absolute right-4 top-4"
-            onClick={handleExit}
-          >
-            <X className="h-4 w-4" />
-          </Button>
           {steps[step]}
         </DialogContent>
       </Dialog>
