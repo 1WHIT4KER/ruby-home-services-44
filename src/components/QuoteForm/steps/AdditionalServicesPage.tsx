@@ -28,10 +28,10 @@ const AdditionalServicesPage = ({ formData, setFormData, onNext, onPrevious }: A
 
       <div className="space-y-4">
         <Card 
-          className={`cursor-pointer transition-colors ${
+          className={`cursor-pointer transition-colors bg-white ${
             formData.screenCleaning 
               ? 'bg-[#ff3b4e1a] border-ruby-red' 
-              : 'hover:border-ruby-red'
+              : 'border hover:border-ruby-red'
           }`}
           onClick={() => toggleService('screenCleaning')}
         >
@@ -42,10 +42,10 @@ const AdditionalServicesPage = ({ formData, setFormData, onNext, onPrevious }: A
         </Card>
 
         <Card 
-          className={`cursor-pointer transition-colors ${
+          className={`cursor-pointer transition-colors bg-white ${
             formData.exteriorPowerWashing 
               ? 'bg-[#ff3b4e1a] border-ruby-red' 
-              : 'hover:border-ruby-red'
+              : 'border hover:border-ruby-red'
           }`}
           onClick={() => toggleService('exteriorPowerWashing')}
         >
@@ -56,10 +56,10 @@ const AdditionalServicesPage = ({ formData, setFormData, onNext, onPrevious }: A
         </Card>
 
         <Card 
-          className={`cursor-pointer transition-colors ${
+          className={`cursor-pointer transition-colors bg-white ${
             formData.gutterCleaning 
               ? 'bg-[#ff3b4e1a] border-ruby-red' 
-              : 'hover:border-ruby-red'
+              : 'border hover:border-ruby-red'
           }`}
           onClick={() => toggleService('gutterCleaning')}
         >
