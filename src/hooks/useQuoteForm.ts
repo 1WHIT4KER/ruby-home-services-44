@@ -17,6 +17,7 @@ export interface QuoteFormData {
   gutterCleaning: boolean;
   appointmentDate: Date | null;
   wantsReviewDiscount: boolean;
+  paymentMethod: string;
 }
 
 const initialFormData: QuoteFormData = {
@@ -35,7 +36,8 @@ const initialFormData: QuoteFormData = {
   exteriorPowerWashing: false,
   gutterCleaning: false,
   appointmentDate: null,
-  wantsReviewDiscount: false
+  wantsReviewDiscount: false,
+  paymentMethod: ""
 };
 
 export const useQuoteForm = () => {

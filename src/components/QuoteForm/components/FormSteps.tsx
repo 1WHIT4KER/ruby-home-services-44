@@ -6,6 +6,7 @@ import ContractSelectionPage from "../steps/ContractSelectionPage";
 import AdditionalServicesPage from "../steps/AdditionalServicesPage";
 import SchedulingPage from "../steps/SchedulingPage";
 import ReviewOfferPage from "../steps/ReviewOfferPage";
+import PaymentMethodPage from "../steps/PaymentMethodPage";
 import SummaryPage from "../steps/SummaryPage";
 import ThankYouPage from "../steps/ThankYouPage";
 import { QuoteFormData } from "@/hooks/useQuoteForm";
@@ -63,10 +64,16 @@ export const FormSteps = ({ step, setStep, formData, setFormData, onClose }: For
       onNext={() => setStep(8)}
       onPrevious={() => setStep(6)}
     />,
-    <SummaryPage 
+    <PaymentMethodPage 
       formData={formData}
+      setFormData={setFormData}
       onNext={() => setStep(9)}
       onPrevious={() => setStep(7)}
+    />,
+    <SummaryPage 
+      formData={formData}
+      onNext={() => setStep(10)}
+      onPrevious={() => setStep(8)}
     />,
     <ThankYouPage 
       formData={formData}
