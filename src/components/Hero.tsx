@@ -25,7 +25,7 @@ export const Hero = ({ onQuoteClick }: HeroProps) => {
         <h2 className="text-ruby-red font-rubik text-4xl md:text-5xl mb-8">
           WE LOVE THOSE.
         </h2>
-        <div className="flex flex-col items-center space-y-4 mt-20">
+        <div className="flex flex-col items-center space-y-4 mt-80">
           <Button 
             className="bg-ruby-red hover:bg-ruby-red/90 text-white rounded-full px-8 py-6 text-lg"
             onClick={onQuoteClick}
