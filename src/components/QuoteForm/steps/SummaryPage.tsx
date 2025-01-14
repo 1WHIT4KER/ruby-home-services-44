@@ -6,6 +6,7 @@ import { PersonalInfoSection } from "../components/Summary/PersonalInfoSection";
 import { ServicesSection } from "../components/Summary/ServicesSection";
 import { DiscountsSection } from "../components/Summary/DiscountsSection";
 import { AppointmentSection } from "../components/Summary/AppointmentSection";
+import { PaymentMethodSection } from "../components/Summary/PaymentMethodSection";
 
 interface SummaryPageProps {
   formData: {
@@ -25,6 +26,7 @@ interface SummaryPageProps {
     gutterCleaning: boolean;
     appointmentDate: Date | null;
     wantsReviewDiscount: boolean;
+    paymentMethod: string;
   };
   onNext: () => void;
   onPrevious: () => void;
@@ -47,7 +49,8 @@ const SummaryPage = ({ formData, onNext, onPrevious }: SummaryPageProps) => {
         exterior_power_washing: formData.exteriorPowerWashing,
         gutter_cleaning: formData.gutterCleaning,
         appointment_date: formData.appointmentDate?.toISOString(),
-        wants_review_discount: formData.wantsReviewDiscount
+        wants_review_discount: formData.wantsReviewDiscount,
+        payment_method: formData.paymentMethod
       });
 
       if (error) throw error;
@@ -78,6 +81,7 @@ const SummaryPage = ({ formData, onNext, onPrevious }: SummaryPageProps) => {
             <ServicesSection {...formData} />
             <DiscountsSection wantsReviewDiscount={formData.wantsReviewDiscount} />
             <AppointmentSection appointmentDate={formData.appointmentDate} />
+            <PaymentMethodSection paymentMethod={formData.paymentMethod} />
           </div>
         </CardContent>
       </Card>

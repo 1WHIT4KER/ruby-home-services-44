@@ -21,6 +21,7 @@ export type Database = {
           id: string
           last_name: string
           notes: string | null
+          payment_method: string | null
           phone: string
           screen_cleaning: boolean | null
           selected_contract: string | null
@@ -40,6 +41,7 @@ export type Database = {
           id?: string
           last_name: string
           notes?: string | null
+          payment_method?: string | null
           phone: string
           screen_cleaning?: boolean | null
           selected_contract?: string | null
@@ -59,6 +61,7 @@ export type Database = {
           id?: string
           last_name?: string
           notes?: string | null
+          payment_method?: string | null
           phone?: string
           screen_cleaning?: boolean | null
           selected_contract?: string | null
