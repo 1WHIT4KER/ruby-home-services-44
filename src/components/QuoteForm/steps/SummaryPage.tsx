@@ -26,7 +26,7 @@ const SummaryPage = ({ formData, onNext, onPrevious }: SummaryPageProps) => {
 
   const handleSubmit = async () => {
     try {
-      const { error } = await supabase.from('form_submissions').insert([{
+      const { error } = await supabase.from('form_submissions').insert({
         first_name: formData.firstName,
         last_name: formData.lastName,
         phone: formData.phone,
@@ -37,9 +37,9 @@ const SummaryPage = ({ formData, onNext, onPrevious }: SummaryPageProps) => {
         screen_cleaning: formData.screenCleaning,
         exterior_power_washing: formData.exteriorPowerWashing,
         gutter_cleaning: formData.gutterCleaning,
-        appointment_date: formData.appointmentDate,
+        appointment_date: formData.appointmentDate?.toISOString(),
         wants_review_discount: formData.wantsReviewDiscount
-      }]);
+      });
 
       if (error) throw error;
 
