@@ -5,7 +5,11 @@ export interface QuoteFormData {
   lastName: string;
   phone: string;
   email: string;
-  address: string;
+  streetAddress: string;
+  unit: string;
+  city: string;
+  state: string;
+  homeType: "single" | "multi" | "";
   wantsInstantQuote: boolean;
   selectedContract: string;
   screenCleaning: boolean;
@@ -20,7 +24,11 @@ const initialFormData: QuoteFormData = {
   lastName: "",
   phone: "",
   email: "",
-  address: "",
+  streetAddress: "",
+  unit: "",
+  city: "",
+  state: "",
+  homeType: "",
   wantsInstantQuote: true,
   selectedContract: "",
   screenCleaning: false,

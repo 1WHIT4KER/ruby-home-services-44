@@ -1,10 +1,15 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 interface AddressPageProps {
   formData: {
-    address: string;
+    streetAddress: string;
+    unit: string;
+    city: string;
+    state: string;
+    homeType: "single" | "multi" | "";
   };
   setFormData: (data: any) => void;
   onNext: () => void;
@@ -28,14 +33,64 @@ const AddressPage = ({ formData, setFormData, onNext, onPrevious }: AddressPageP
 
       <div className="space-y-4">
         <div className="space-y-2">
-          <Label htmlFor="address">Home Address *</Label>
+          <Label htmlFor="streetAddress">Street Address *</Label>
           <Input
-            id="address"
+            id="streetAddress"
             required
-            value={formData.address}
-            onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-            placeholder="Enter your full address"
+            value={formData.streetAddress}
+            onChange={(e) => setFormData({ ...formData, streetAddress: e.target.value })}
+            placeholder="Enter your street address"
           />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="unit">Apt., suite, unit, building, floor, etc.</Label>
+          <Input
+            id="unit"
+            value={formData.unit}
+            onChange={(e) => setFormData({ ...formData, unit: e.target.value })}
+            placeholder="Optional"
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="city">City *</Label>
+          <Input
+            id="city"
+            required
+            value={formData.city}
+            onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+            placeholder="Enter your city"
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="state">State *</Label>
+          <Input
+            id="state"
+            required
+            value={formData.state}
+            onChange={(e) => setFormData({ ...formData, state: e.target.value })}
+            placeholder="Enter your state"
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label>Home Type</Label>
+          <RadioGroup
+            value={formData.homeType}
+            onValueChange={(value) => setFormData({ ...formData, homeType: value })}
+            className="flex gap-4"
+          >
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="single" id="single" />
+              <Label htmlFor="single">Single Story</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="multi" id="multi" />
+              <Label htmlFor="multi">Multi Story</Label>
+            </div>
+          </RadioGroup>
         </div>
       </div>
 
