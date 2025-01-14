@@ -20,12 +20,21 @@ export const Hero = ({ onQuoteClick }: HeroProps) => {
         <h2 className="text-ruby-red font-rubik text-4xl md:text-5xl mb-8">
           WE LOVE THOSE.
         </h2>
-        <Button 
-          className="bg-ruby-red hover:bg-ruby-red/90 text-white rounded-full px-8 py-6 text-lg"
-          onClick={onQuoteClick}
-        >
-          GET A QUOTE
-        </Button>
+        <div className="flex flex-col items-center space-y-4">
+          <Button 
+            className="bg-ruby-red hover:bg-ruby-red/90 text-white rounded-full px-8 py-6 text-lg"
+            onClick={onQuoteClick}
+          >
+            QUICK START
+          </Button>
+          <span className="text-white font-medium">OR</span>
+          <Button 
+            className="bg-ruby-red hover:bg-ruby-red/90 text-white rounded-full px-8 py-6 text-lg"
+            onClick={onQuoteClick}
+          >
+            REACH OUT
+          </Button>
+        </div>
       </div>
     </div>
   );
