@@ -15,7 +15,7 @@ const WelcomePage = ({ onNext }: WelcomePageProps) => {
         />
       </div>
       <p className="text-lg text-center text-muted-foreground max-w-md">
-        Welcome! Let's get you set up with a quick and easy quote for our professional window cleaning services.
+        Welcome! Let's get you set up with our one-of-a-kind, hassle-free form!
       </p>
       <Button onClick={onNext} size="lg" className="mt-4">
         Start
