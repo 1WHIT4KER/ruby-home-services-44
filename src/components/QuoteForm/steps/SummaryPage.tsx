@@ -2,7 +2,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { format } from "date-fns";
+import { PersonalInfoSection } from "../components/Summary/PersonalInfoSection";
+import { ServicesSection } from "../components/Summary/ServicesSection";
+import { DiscountsSection } from "../components/Summary/DiscountsSection";
+import { AppointmentSection } from "../components/Summary/AppointmentSection";
 
 interface SummaryPageProps {
   formData: {
@@ -48,7 +51,6 @@ const SummaryPage = ({ formData, onNext, onPrevious }: SummaryPageProps) => {
       });
 
       if (error) throw error;
-
       onNext();
     } catch (error) {
       console.error('Error submitting form:', error);
@@ -72,61 +74,10 @@ const SummaryPage = ({ formData, onNext, onPrevious }: SummaryPageProps) => {
         </CardHeader>
         <CardContent className="space-y-6 pt-6">
           <div className="space-y-4">
-            <section className="space-y-2">
-              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Personal Information</h3>
-              <div className="grid grid-cols-2 gap-2 text-sm">
-                <div>
-                  <span className="block text-muted-foreground">Name</span>
-                  <span>{formData.firstName} {formData.lastName}</span>
-                </div>
-                <div>
-                  <span className="block text-muted-foreground">Phone</span>
-                  <span>{formData.phone}</span>
-                </div>
-                {formData.email && (
-                  <div className="col-span-2">
-                    <span className="block text-muted-foreground">Email</span>
-                    <span>{formData.email}</span>
-                  </div>
-                )}
-                <div className="col-span-2">
-                  <span className="block text-muted-foreground">Address</span>
-                  <span>{formData.streetAddress}{formData.unit ? `, ${formData.unit}` : ''}, {formData.city}, {formData.state}</span>
-                </div>
-                {formData.homeType && (
-                  <div className="col-span-2">
-                    <span className="block text-muted-foreground">Home Type</span>
-                    <span>{formData.homeType === 'single' ? 'Single Story' : 'Multi Story'}</span>
-                  </div>
-                )}
-              </div>
-            </section>
-
-            <section className="space-y-2">
-              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Selected Services</h3>
-              <div className="space-y-1 text-sm">
-                {formData.screenCleaning && <p>• Screen Cleaning ($4 per screen)</p>}
-                {formData.exteriorPowerWashing && <p>• Exterior Power Washing ($150)</p>}
-                {formData.gutterCleaning && <p>• Gutter Cleaning ($100-$200)</p>}
-              </div>
-            </section>
-
-            <section className="space-y-2">
-              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Discounts</h3>
-              <div className="space-y-1 text-sm">
-                {formData.wantsReviewDiscount && (
-                  <p>• Review Discount: $20 off your service for writing a review</p>
-                )}
-                {/* Space for future discounts */}
-              </div>
-            </section>
-
-            {formData.appointmentDate && (
-              <section className="space-y-2">
-                <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Appointment</h3>
-                <p className="text-sm">{format(formData.appointmentDate, "MMMM d, yyyy 'at' h:mm a")}</p>
-              </section>
-            )}
+            <PersonalInfoSection {...formData} />
+            <ServicesSection {...formData} />
+            <DiscountsSection wantsReviewDiscount={formData.wantsReviewDiscount} />
+            <AppointmentSection appointmentDate={formData.appointmentDate} />
           </div>
         </CardContent>
       </Card>
