@@ -63,23 +63,23 @@ export const Hero = ({ onQuoteClick }: HeroProps) => {
             <div className="flex items-center space-x-3">
               <Instagram className="h-5 w-5 text-ruby-red" />
               <a 
-                href="https://instagram.com/rubyyhome" 
+                href="https://instagram.com/rubyy.home" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-lg hover:text-ruby-red"
               >
-                @rubyyhome
+                @rubyy.home
               </a>
             </div>
             <div className="flex items-center space-x-3">
               <Facebook className="h-5 w-5 text-ruby-red" />
               <a 
-                href="https://facebook.com/rubyyhome" 
+                href="https://facebook.com/rubyy.home" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-lg hover:text-ruby-red"
               >
-                @rubyyhome
+                @rubyy.home
               </a>
             </div>
           </div>
