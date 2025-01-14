@@ -11,34 +11,61 @@ export type Database = {
     Tables: {
       form_submissions: {
         Row: {
-          client_name: string
+          address: string
+          appointment_date: string | null
           created_at: string
           email: string
+          exterior_power_washing: boolean | null
+          first_name: string
+          gutter_cleaning: boolean | null
           id: string
+          last_name: string
           notes: string | null
           phone: string
+          screen_cleaning: boolean | null
+          selected_contract: string | null
           status: string
           viewed_at: string | null
+          wants_instant_quote: boolean | null
+          wants_review_discount: boolean | null
         }
         Insert: {
-          client_name: string
+          address: string
+          appointment_date?: string | null
           created_at?: string
           email: string
+          exterior_power_washing?: boolean | null
+          first_name: string
+          gutter_cleaning?: boolean | null
           id?: string
+          last_name: string
           notes?: string | null
           phone: string
+          screen_cleaning?: boolean | null
+          selected_contract?: string | null
           status?: string
           viewed_at?: string | null
+          wants_instant_quote?: boolean | null
+          wants_review_discount?: boolean | null
         }
         Update: {
-          client_name?: string
+          address?: string
+          appointment_date?: string | null
           created_at?: string
           email?: string
+          exterior_power_washing?: boolean | null
+          first_name?: string
+          gutter_cleaning?: boolean | null
           id?: string
+          last_name?: string
           notes?: string | null
           phone?: string
+          screen_cleaning?: boolean | null
+          selected_contract?: string | null
           status?: string
           viewed_at?: string | null
+          wants_instant_quote?: boolean | null
+          wants_review_discount?: boolean | null
         }
         Relationships: []
       }
