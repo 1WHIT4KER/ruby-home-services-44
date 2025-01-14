@@ -27,24 +27,42 @@ const AdditionalServicesPage = ({ formData, setFormData, onNext, onPrevious }: A
       </div>
 
       <div className="space-y-4">
-        <Card className={`cursor-pointer transition-colors ${formData.screenCleaning ? 'border-primary' : ''}`}
-          onClick={() => toggleService('screenCleaning')}>
+        <Card 
+          className={`cursor-pointer transition-colors ${
+            formData.screenCleaning 
+              ? 'bg-[#ff3b4e1a] border-ruby-red' 
+              : 'hover:border-ruby-red'
+          }`}
+          onClick={() => toggleService('screenCleaning')}
+        >
           <CardHeader>
             <CardTitle>Screen Cleaning</CardTitle>
             <CardDescription>Extra $4 per screen</CardDescription>
           </CardHeader>
         </Card>
 
-        <Card className={`cursor-pointer transition-colors ${formData.exteriorPowerWashing ? 'border-primary' : ''}`}
-          onClick={() => toggleService('exteriorPowerWashing')}>
+        <Card 
+          className={`cursor-pointer transition-colors ${
+            formData.exteriorPowerWashing 
+              ? 'bg-[#ff3b4e1a] border-ruby-red' 
+              : 'hover:border-ruby-red'
+          }`}
+          onClick={() => toggleService('exteriorPowerWashing')}
+        >
           <CardHeader>
             <CardTitle>Exterior Power Washing</CardTitle>
             <CardDescription>$150</CardDescription>
           </CardHeader>
         </Card>
 
-        <Card className={`cursor-pointer transition-colors ${formData.gutterCleaning ? 'border-primary' : ''}`}
-          onClick={() => toggleService('gutterCleaning')}>
+        <Card 
+          className={`cursor-pointer transition-colors ${
+            formData.gutterCleaning 
+              ? 'bg-[#ff3b4e1a] border-ruby-red' 
+              : 'hover:border-ruby-red'
+          }`}
+          onClick={() => toggleService('gutterCleaning')}
+        >
           <CardHeader>
             <CardTitle>Gutter Cleaning</CardTitle>
             <CardDescription>$100-$200</CardDescription>
