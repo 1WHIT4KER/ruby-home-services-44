@@ -15,14 +15,6 @@ export const Navbar = ({ onQuoteClick }: NavbarProps) => {
             className="h-20"
           />
         </div>
-        <div className="absolute right-4 top-4">
-          <Button 
-            className="bg-ruby-red hover:bg-ruby-red/90 text-white rounded-full px-8"
-            onClick={() => window.location.href = "tel:+13853523406"}
-          >
-            CALL US
-          </Button>
-        </div>
       </div>
     </nav>
   );
