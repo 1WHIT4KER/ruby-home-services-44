@@ -13,8 +13,8 @@ export const Hero = ({ onQuoteClick }: HeroProps) => {
   return (
     <div className="relative min-h-screen">
       <img
-        src="/lovable-uploads/5afad52f-983c-41af-876a-73ca650585f9.png"
-        alt="Window cleaner at work"
+        src="/lovable-uploads/75031317-fc89-4b78-9134-1524b39a269d.png"
+        alt="Window cleaner at work on a ladder"
         className="absolute inset-0 w-full h-full object-cover"
       />
       <div className="absolute inset-0 bg-black/20" />
