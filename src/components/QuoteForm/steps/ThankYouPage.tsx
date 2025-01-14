@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
-import { Download, Share } from "lucide-react";
+import { Download, Share2 } from "lucide-react";
+import { toast } from "sonner";
 
 interface ThankYouPageProps {
   formData: {
@@ -22,9 +23,8 @@ interface ThankYouPageProps {
 }
 
 const ThankYouPage = ({ formData, onClose }: ThankYouPageProps) => {
-  const downloadAsPDF = () => {
-    // Create text content for the file
-    const content = `
+  const getReservationText = () => {
+    return `
 Service Reservation Details:
 
 Name: ${formData.firstName} ${formData.lastName}
@@ -40,9 +40,10 @@ ${formData.screenCleaning ? '- Screen Cleaning' : ''}
 ${formData.exteriorPowerWashing ? '- Exterior Power Washing' : ''}
 ${formData.gutterCleaning ? '- Gutter Cleaning' : ''}
     `;
+  };
 
-    // Create blob and download
-    const blob = new Blob([content], { type: 'text/plain' });
+  const downloadAsPDF = () => {
+    const blob = new Blob([getReservationText()], { type: 'text/plain' });
     const url = window.URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
@@ -54,14 +55,29 @@ ${formData.gutterCleaning ? '- Gutter Cleaning' : ''}
   };
 
   const shareReservation = async () => {
-    if (navigator.share) {
-      try {
+    const text = getReservationText();
+    
+    try {
+      // Try Web Share API first
+      if (navigator.share) {
         await navigator.share({
           title: 'Window Cleaning Service Reservation',
-          text: `My window cleaning service is scheduled for ${formData.appointmentDate ? format(formData.appointmentDate, "PPpp") : 'TBD'}`,
+          text: text,
         });
-      } catch (error) {
-        console.log('Error sharing:', error);
+        return;
+      }
+
+      // Fallback to clipboard if Web Share API is not available
+      await navigator.clipboard.writeText(text);
+      toast.success("Reservation details copied to clipboard!");
+    } catch (error) {
+      console.log('Error sharing:', error);
+      // Final fallback - try clipboard again
+      try {
+        await navigator.clipboard.writeText(text);
+        toast.success("Reservation details copied to clipboard!");
+      } catch (clipboardError) {
+        toast.error("Couldn't share the reservation. Please try downloading instead.");
       }
     }
   };
@@ -91,16 +107,14 @@ ${formData.gutterCleaning ? '- Gutter Cleaning' : ''}
           Download Reservation
         </Button>
         
-        {navigator.share && (
-          <Button 
-            variant="outline"
-            className="w-full"
-            onClick={shareReservation}
-          >
-            <Share className="mr-2" />
-            Share Reservation
-          </Button>
-        )}
+        <Button 
+          variant="outline"
+          className="w-full"
+          onClick={shareReservation}
+        >
+          <Share2 className="mr-2" />
+          Share Reservation
+        </Button>
 
         <Button 
           className="w-full"
