@@ -1,4 +1,5 @@
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Progress } from "@/components/ui/progress";
 import { useState } from "react";
 import { useQuoteForm } from "@/hooks/useQuoteForm";
 import { ExitConfirmationDialog } from "./ExitConfirmationDialog";
@@ -31,6 +32,10 @@ export const QuoteFormDialog = ({ open, onOpenChange }: QuoteFormDialogProps) =>
     setShowExitDialog(false);
     onOpenChange(false);
   };
+
+  // Calculate progress percentage
+  const totalSteps = 10; // Total number of steps including welcome and thank you
+  const progressPercentage = (step / (totalSteps - 1)) * 100;
 
   const steps = [
     <WelcomePage onNext={() => setStep(1)} />,
@@ -100,7 +105,15 @@ export const QuoteFormDialog = ({ open, onOpenChange }: QuoteFormDialogProps) =>
         }
       }}>
         <DialogContent className="sm:max-w-[600px] h-[80vh] overflow-y-auto">
-          {steps[step]}
+          <div className="space-y-6">
+            <div className="space-y-2">
+              <Progress value={progressPercentage} className="h-2 bg-gray-100" indicatorClassName="bg-ruby-red" />
+              <p className="text-sm text-muted-foreground text-center">
+                Step {step + 1} of {totalSteps}
+              </p>
+            </div>
+            {steps[step]}
+          </div>
         </DialogContent>
       </Dialog>
 
