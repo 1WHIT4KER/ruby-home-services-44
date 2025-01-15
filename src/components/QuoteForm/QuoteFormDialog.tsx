@@ -1,9 +1,10 @@
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { useState } from "react";
 import { useQuoteForm } from "@/hooks/useQuoteForm";
 import { ExitConfirmationDialog } from "./ExitConfirmationDialog";
 import { FormProgress } from "./components/FormProgress";
 import { FormSteps } from "./components/FormSteps";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 interface QuoteFormDialogProps {
   open: boolean;
@@ -35,7 +36,15 @@ export const QuoteFormDialog = ({ open, onOpenChange }: QuoteFormDialogProps) =>
           onOpenChange(open);
         }
       }}>
-        <DialogContent className="sm:max-w-[600px] w-[95vw] sm:w-full h-[90vh] sm:h-[80vh] overflow-y-auto p-4 sm:p-6">
+        <DialogContent 
+          className="sm:max-w-[600px] w-[95vw] sm:w-full max-h-[90vh] sm:h-[80vh] overflow-y-auto p-4 sm:p-6"
+          aria-describedby="form-description"
+        >
+          <DialogTitle className="sr-only">Quote Form</DialogTitle>
+          <div id="form-description" className="sr-only">
+            Fill out this form to get a quote for our services
+          </div>
+          
           <div className="flex flex-col h-full">
             <FormSteps 
               step={step}
