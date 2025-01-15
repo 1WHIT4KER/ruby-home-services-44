@@ -42,9 +42,9 @@ const reviews = [
 
 export const Reviews = () => {
   return (
-    <section className="py-12 md:py-20 bg-ruby-light relative">
+    <section className="py-20 bg-ruby-light relative">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl font-rubik font-bold text-center mb-8 md:mb-16">
+        <h2 className="text-4xl font-rubik font-bold text-center mb-16">
           REVIEWS
         </h2>
         <Carousel
@@ -56,17 +56,14 @@ export const Reviews = () => {
         >
           <CarouselContent className="-ml-2 md:-ml-4">
             {reviews.map((review, index) => (
-              <CarouselItem 
-                key={index} 
-                className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3"
-              >
-                <Card className="bg-white h-full transform transition-transform duration-300 hover:scale-[1.02]">
-                  <CardContent className="p-4 md:p-6">
+              <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
+                <Card className="bg-white h-full">
+                  <CardContent className="pt-6">
                     <div className="flex items-center mb-2">
                       {[...Array(review.rating)].map((_, i) => (
                         <svg
                           key={i}
-                          className="w-4 h-4 md:w-5 md:h-5 text-yellow-400"
+                          className="w-5 h-5 text-yellow-400"
                           fill="currentColor"
                           viewBox="0 0 20 20"
                         >
@@ -74,10 +71,8 @@ export const Reviews = () => {
                         </svg>
                       ))}
                     </div>
-                    <p className="text-sm md:text-base text-gray-700 mb-4 font-nunito line-clamp-4 md:line-clamp-none">
-                      {review.text}
-                    </p>
-                    <div className="flex justify-between items-center text-xs md:text-sm text-gray-500">
+                    <p className="text-gray-700 mb-4 font-nunito">{review.text}</p>
+                    <div className="flex justify-between items-center text-sm text-gray-500">
                       <span className="font-semibold">{review.name}</span>
                       <span>{review.date}</span>
                     </div>
@@ -86,8 +81,8 @@ export const Reviews = () => {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="hidden lg:flex absolute -left-12 opacity-20 hover:opacity-100 transition-opacity w-14 h-14 bg-transparent hover:bg-transparent" />
-          <CarouselNext className="hidden lg:flex absolute -right-12 opacity-20 hover:opacity-100 transition-opacity w-14 h-14 bg-transparent hover:bg-transparent" />
+          <CarouselPrevious className="hidden md:flex absolute -left-12 opacity-20 hover:opacity-100 transition-opacity w-14 h-14 bg-transparent hover:bg-transparent" />
+          <CarouselNext className="hidden md:flex absolute -right-12 opacity-20 hover:opacity-100 transition-opacity w-14 h-14 bg-transparent hover:bg-transparent" />
         </Carousel>
       </div>
     </section>
