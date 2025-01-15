@@ -18,23 +18,23 @@ export const Hero = ({ onQuoteClick }: HeroProps) => {
         className="absolute inset-0 w-full h-full object-cover"
       />
       <div className="absolute inset-0 bg-black/20" />
-      <div className="relative container mx-auto pt-40 px-4 flex flex-col items-center text-center">
-        <h1 className="text-white font-rubik font-bold text-7xl md:text-8xl mb-4">
+      <div className="relative container mx-auto pt-32 md:pt-40 px-4 flex flex-col items-center text-center">
+        <h1 className="text-white font-rubik font-bold text-5xl md:text-7xl lg:text-8xl mb-2 md:mb-4">
           DIRTY WINDOWS?
         </h1>
-        <h2 className="text-ruby-red font-rubik text-4xl md:text-5xl mb-8">
+        <h2 className="text-ruby-red font-rubik text-3xl md:text-4xl lg:text-5xl mb-8">
           WE LOVE THOSE.
         </h2>
-        <div className="flex items-center justify-center space-x-8">
+        <div className="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-8">
           <Button 
-            className="bg-ruby-red hover:bg-ruby-red/90 text-white rounded-full px-8 py-6 text-lg"
+            className="bg-ruby-red hover:bg-ruby-red/90 text-white rounded-full px-8 py-6 text-lg w-full md:w-auto"
             onClick={onQuoteClick}
           >
             QUICK START
           </Button>
-          <span className="text-white font-medium text-xl">OR</span>
+          <span className="text-white font-medium text-xl hidden md:block">OR</span>
           <Button 
-            className="bg-ruby-red hover:bg-ruby-red/90 text-white rounded-full px-8 py-6 text-lg"
+            className="bg-ruby-red hover:bg-ruby-red/90 text-white rounded-full px-8 py-6 text-lg w-full md:w-auto"
             onClick={() => setContactOpen(true)}
           >
             REACH OUT
