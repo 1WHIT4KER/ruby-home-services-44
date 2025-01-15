@@ -16,7 +16,11 @@ export const QuoteFormDialog = ({ open, onOpenChange }: QuoteFormDialogProps) =>
   const [showExitDialog, setShowExitDialog] = useState(false);
 
   const handleExit = () => {
-    setShowExitDialog(true);
+    if (step === 10) { // If we're on the thank you page
+      confirmExit();
+    } else {
+      setShowExitDialog(true);
+    }
   };
 
   const confirmExit = () => {
@@ -25,20 +29,33 @@ export const QuoteFormDialog = ({ open, onOpenChange }: QuoteFormDialogProps) =>
     onOpenChange(false);
   };
 
-  const totalSteps = 10;
+  const totalSteps = 11;
 
   return (
     <>
-      <Dialog open={open} onOpenChange={(open) => {
-        if (!open) {
-          handleExit();
-        } else {
-          onOpenChange(open);
-        }
-      }}>
+      <Dialog 
+        open={open} 
+        onOpenChange={(open) => {
+          if (!open) {
+            handleExit();
+          } else {
+            onOpenChange(open);
+          }
+        }}
+      >
         <DialogContent 
           className="sm:max-w-[600px] w-[95vw] sm:w-full max-h-[90vh] sm:h-[80vh] overflow-y-auto p-4 sm:p-6"
           aria-describedby="form-description"
+          onInteractOutside={(e) => {
+            if (step === 10) return; // Prevent closing on thank you page
+            e.preventDefault();
+            handleExit();
+          }}
+          onEscapeKeyDown={(e) => {
+            if (step === 10) return; // Prevent closing on thank you page
+            e.preventDefault();
+            handleExit();
+          }}
         >
           <DialogTitle className="sr-only">Quote Form</DialogTitle>
           <div id="form-description" className="sr-only">

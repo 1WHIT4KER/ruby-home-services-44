@@ -7,6 +7,7 @@ import { ServicesSection } from "../components/Summary/ServicesSection";
 import { DiscountsSection } from "../components/Summary/DiscountsSection";
 import { AppointmentSection } from "../components/Summary/AppointmentSection";
 import { PaymentMethodSection } from "../components/Summary/PaymentMethodSection";
+import { useState } from "react";
 
 interface SummaryPageProps {
   formData: {
@@ -34,8 +35,14 @@ interface SummaryPageProps {
 
 const SummaryPage = ({ formData, onNext, onPrevious }: SummaryPageProps) => {
   const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async () => {
+    if (isSubmitting) return;
+    
+    setIsSubmitting(true);
+    console.log("Starting form submission...");
+
     try {
       const { error } = await supabase.from('form_submissions').insert({
         first_name: formData.firstName,
@@ -53,7 +60,17 @@ const SummaryPage = ({ formData, onNext, onPrevious }: SummaryPageProps) => {
         payment_method: formData.paymentMethod
       });
 
-      if (error) throw error;
+      console.log("Form submission response:", error || "Success");
+
+      if (error) {
+        throw error;
+      }
+
+      toast({
+        title: "Success!",
+        description: "Your form has been submitted successfully.",
+      });
+
       onNext();
     } catch (error) {
       console.error('Error submitting form:', error);
@@ -62,6 +79,8 @@ const SummaryPage = ({ formData, onNext, onPrevious }: SummaryPageProps) => {
         description: "There was a problem submitting your form. Please try again.",
         variant: "destructive",
       });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -91,10 +110,19 @@ const SummaryPage = ({ formData, onNext, onPrevious }: SummaryPageProps) => {
       </p>
 
       <div className="flex justify-between pt-4">
-        <Button variant="outline" onClick={onPrevious}>
+        <Button 
+          variant="outline" 
+          onClick={onPrevious}
+          disabled={isSubmitting}
+        >
           Previous
         </Button>
-        <Button onClick={handleSubmit}>Submit</Button>
+        <Button 
+          onClick={handleSubmit}
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? 'Submitting...' : 'Submit'}
+        </Button>
       </div>
     </div>
   );
