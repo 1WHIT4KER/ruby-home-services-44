@@ -2,10 +2,31 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { format } from "date-fns";
+
+interface FormSubmission {
+  id: string;
+  created_at: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone: string;
+  status: string;
+  appointment_date: string | null;
+}
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
+  const [submissions, setSubmissions] = useState<FormSubmission[]>([]);
 
   useEffect(() => {
     const checkAdmin = async () => {
@@ -26,19 +47,44 @@ const AdminDashboard = () => {
         navigate('/admin');
       }
       
-      setLoading(false);
+      fetchSubmissions();
     };
 
     checkAdmin();
   }, [navigate]);
+
+  const fetchSubmissions = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('form_submissions')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+
+      setSubmissions(data || []);
+    } catch (error) {
+      console.error('Error fetching submissions:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
     navigate('/admin');
   };
 
+  const formatDate = (dateString: string) => {
+    return format(new Date(dateString), "MMM d, yyyy 'at' h:mm a");
+  };
+
   if (loading) {
-    return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        Loading...
+      </div>
+    );
   }
 
   return (
@@ -48,22 +94,42 @@ const AdminDashboard = () => {
           <h1 className="text-2xl font-bold text-ruby-red">Admin Dashboard</h1>
           <Button variant="outline" onClick={handleSignOut}>Sign Out</Button>
         </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* Placeholder for dashboard content - we'll implement these features next */}
-          <div className="p-6 bg-white rounded-lg shadow-md">
-            <h2 className="font-semibold mb-2">Form Submissions</h2>
-            <p className="text-muted-foreground">View and manage form submissions</p>
-          </div>
-          
-          <div className="p-6 bg-white rounded-lg shadow-md">
-            <h2 className="font-semibold mb-2">User Management</h2>
-            <p className="text-muted-foreground">Manage admin access and roles</p>
-          </div>
-          
-          <div className="p-6 bg-white rounded-lg shadow-md">
-            <h2 className="font-semibold mb-2">Analytics</h2>
-            <p className="text-muted-foreground">View site statistics and metrics</p>
+
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <h2 className="text-xl font-semibold mb-4">Recent Form Submissions</h2>
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Date</TableHead>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Email</TableHead>
+                  <TableHead>Phone</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Appointment</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {submissions.map((submission) => (
+                  <TableRow key={submission.id}>
+                    <TableCell>{formatDate(submission.created_at)}</TableCell>
+                    <TableCell>
+                      {submission.first_name} {submission.last_name}
+                    </TableCell>
+                    <TableCell>{submission.email}</TableCell>
+                    <TableCell>{submission.phone}</TableCell>
+                    <TableCell>
+                      <span className="capitalize">{submission.status}</span>
+                    </TableCell>
+                    <TableCell>
+                      {submission.appointment_date 
+                        ? formatDate(submission.appointment_date)
+                        : 'Not scheduled'}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
           </div>
         </div>
       </div>
