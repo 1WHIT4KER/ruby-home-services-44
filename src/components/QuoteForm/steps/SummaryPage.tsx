@@ -36,6 +36,7 @@ const SummaryPage = ({ formData, onNext, onPrevious }: SummaryPageProps) => {
   const { toast } = useToast();
 
   const handleSubmit = async () => {
+    console.log('Attempting to submit form with data:', formData);
     try {
       const { error } = await supabase.from('form_submissions').insert({
         first_name: formData.firstName,
@@ -53,7 +54,12 @@ const SummaryPage = ({ formData, onNext, onPrevious }: SummaryPageProps) => {
         payment_method: formData.paymentMethod
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error('Supabase error:', error);
+        throw error;
+      }
+      
+      console.log('Form submitted successfully');
       onNext();
     } catch (error) {
       console.error('Error submitting form:', error);
