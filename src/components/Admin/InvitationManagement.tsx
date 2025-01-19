@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Mail, UserPlus } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -50,6 +50,11 @@ export const InvitationManagement = () => {
       setLoading(false);
     }
   };
+
+  // Add useEffect to fetch invitations when component mounts
+  useEffect(() => {
+    fetchInvitations();
+  }, []);
 
   const sendInvitation = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -103,35 +108,47 @@ export const InvitationManagement = () => {
 
       <div>
         <h2 className="text-xl font-semibold mb-4">Pending Invitations</h2>
-        <div className="rounded-md border">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Email</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Sent At</TableHead>
-                <TableHead>Expires</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {invitations.map((invitation) => (
-                <TableRow key={invitation.id}>
-                  <TableCell className="flex items-center gap-2">
-                    <Mail className="h-4 w-4" />
-                    {invitation.email}
-                  </TableCell>
-                  <TableCell>{invitation.status}</TableCell>
-                  <TableCell>
-                    {new Date(invitation.created_at).toLocaleDateString()}
-                  </TableCell>
-                  <TableCell>
-                    {new Date(invitation.expires_at).toLocaleDateString()}
-                  </TableCell>
+        {loading ? (
+          <div className="text-center py-4">Loading...</div>
+        ) : (
+          <div className="rounded-md border">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Email</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Sent At</TableHead>
+                  <TableHead>Expires</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
+              </TableHeader>
+              <TableBody>
+                {invitations.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={4} className="text-center py-4">
+                      No invitations found
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  invitations.map((invitation) => (
+                    <TableRow key={invitation.id}>
+                      <TableCell className="flex items-center gap-2">
+                        <Mail className="h-4 w-4" />
+                        {invitation.email}
+                      </TableCell>
+                      <TableCell>{invitation.status}</TableCell>
+                      <TableCell>
+                        {new Date(invitation.created_at).toLocaleDateString()}
+                      </TableCell>
+                      <TableCell>
+                        {new Date(invitation.expires_at).toLocaleDateString()}
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </Table>
+          </div>
+        )}
       </div>
     </div>
   );
