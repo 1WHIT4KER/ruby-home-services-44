@@ -2,48 +2,12 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { format } from "date-fns";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { Textarea } from "@/components/ui/textarea";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { Analytics } from "@/components/Admin/Analytics";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
-interface FormSubmission {
-  id: string;
-  created_at: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-  phone: string;
-  status: string;
-  appointment_date: string | null;
-  notes: string | null;
-  address: string;
-  screen_cleaning: boolean;
-  exterior_power_washing: boolean;
-  gutter_cleaning: boolean;
-}
+import { SubmissionsTable } from "@/components/Admin/SubmissionsTable";
+import { SubmissionDetailsDialog } from "@/components/Admin/SubmissionDetailsDialog";
+import { FormSubmission } from "@/types/form";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -99,10 +63,6 @@ const AdminDashboard = () => {
   const handleSignOut = async () => {
     await supabase.auth.signOut();
     navigate('/admin');
-  };
-
-  const formatDate = (dateString: string) => {
-    return format(new Date(dateString), "MMM d, yyyy 'at' h:mm a");
   };
 
   const handleRowClick = (submission: FormSubmission) => {
@@ -168,44 +128,10 @@ const AdminDashboard = () => {
           <TabsContent value="submissions">
             <div className="bg-white rounded-lg shadow-md p-6">
               <h2 className="text-xl font-semibold mb-4">Recent Form Submissions</h2>
-              <div className="overflow-x-auto">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Date</TableHead>
-                      <TableHead>Name</TableHead>
-                      <TableHead>Email</TableHead>
-                      <TableHead>Phone</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Appointment</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {submissions.map((submission) => (
-                      <TableRow 
-                        key={submission.id}
-                        className="cursor-pointer hover:bg-muted"
-                        onClick={() => handleRowClick(submission)}
-                      >
-                        <TableCell>{formatDate(submission.created_at)}</TableCell>
-                        <TableCell>
-                          {submission.first_name} {submission.last_name}
-                        </TableCell>
-                        <TableCell>{submission.email}</TableCell>
-                        <TableCell>{submission.phone}</TableCell>
-                        <TableCell>
-                          <span className="capitalize">{submission.status}</span>
-                        </TableCell>
-                        <TableCell>
-                          {submission.appointment_date 
-                            ? formatDate(submission.appointment_date)
-                            : 'Not scheduled'}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </div>
+              <SubmissionsTable 
+                submissions={submissions}
+                onRowClick={handleRowClick}
+              />
             </div>
           </TabsContent>
           
@@ -217,66 +143,16 @@ const AdminDashboard = () => {
         </Tabs>
       </div>
 
-      <Dialog open={!!selectedSubmission} onOpenChange={(open) => !open && setSelectedSubmission(null)}>
-        <DialogContent className="max-w-2xl">
-          <DialogHeader>
-            <DialogTitle>Submission Details</DialogTitle>
-          </DialogHeader>
-          
-          {selectedSubmission && (
-            <div className="space-y-6">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <h3 className="font-semibold mb-2">Contact Information</h3>
-                  <p>Name: {selectedSubmission.first_name} {selectedSubmission.last_name}</p>
-                  <p>Email: {selectedSubmission.email}</p>
-                  <p>Phone: {selectedSubmission.phone}</p>
-                  <p>Address: {selectedSubmission.address}</p>
-                </div>
-                <div>
-                  <h3 className="font-semibold mb-2">Services Requested</h3>
-                  <ul className="list-disc list-inside">
-                    {selectedSubmission.screen_cleaning && <li>Screen Cleaning</li>}
-                    {selectedSubmission.exterior_power_washing && <li>Exterior Power Washing</li>}
-                    {selectedSubmission.gutter_cleaning && <li>Gutter Cleaning</li>}
-                  </ul>
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium mb-1">Status</label>
-                  <Select value={status} onValueChange={setStatus}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select status" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="new">New</SelectItem>
-                      <SelectItem value="in-progress">In Progress</SelectItem>
-                      <SelectItem value="completed">Completed</SelectItem>
-                      <SelectItem value="cancelled">Cancelled</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium mb-1">Notes</label>
-                  <Textarea
-                    value={notes}
-                    onChange={(e) => setNotes(e.target.value)}
-                    placeholder="Add notes about this submission..."
-                    className="h-32"
-                  />
-                </div>
-
-                <Button onClick={handleUpdateSubmission} className="w-full">
-                  Update Submission
-                </Button>
-              </div>
-            </div>
-          )}
-        </DialogContent>
-      </Dialog>
+      <SubmissionDetailsDialog
+        submission={selectedSubmission}
+        open={!!selectedSubmission}
+        onOpenChange={(open) => !open && setSelectedSubmission(null)}
+        notes={notes}
+        status={status}
+        onNotesChange={setNotes}
+        onStatusChange={setStatus}
+        onUpdate={handleUpdateSubmission}
+      />
     </div>
   );
 };
