@@ -9,6 +9,33 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      app_settings: {
+        Row: {
+          auto_assign_leads: boolean | null
+          created_at: string | null
+          default_quote_expiry: number | null
+          email_notifications: boolean | null
+          id: string
+          updated_at: string | null
+        }
+        Insert: {
+          auto_assign_leads?: boolean | null
+          created_at?: string | null
+          default_quote_expiry?: number | null
+          email_notifications?: boolean | null
+          id?: string
+          updated_at?: string | null
+        }
+        Update: {
+          auto_assign_leads?: boolean | null
+          created_at?: string | null
+          default_quote_expiry?: number | null
+          email_notifications?: boolean | null
+          id?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       form_submissions: {
         Row: {
           address: string
