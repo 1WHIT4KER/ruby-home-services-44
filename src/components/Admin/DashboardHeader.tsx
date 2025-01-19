@@ -8,7 +8,9 @@ interface DashboardHeaderProps {
 export const DashboardHeader = ({ onSignOut }: DashboardHeaderProps) => {
   return (
     <div className="flex justify-between items-center">
+      <h1 className="text-2xl font-bold text-ruby-red">Admin Dashboard</h1>
       <div className="flex items-center gap-4">
+        <Button variant="outline" onClick={onSignOut}>Sign Out</Button>
         <Link to="/" className="hover:opacity-80 transition-opacity">
           <img 
             src="/lovable-uploads/77ce0bf0-17d7-43e2-b81f-3a314b8484c0.png"
@@ -16,9 +18,7 @@ export const DashboardHeader = ({ onSignOut }: DashboardHeaderProps) => {
             className="h-12"
           />
         </Link>
-        <h1 className="text-2xl font-bold text-ruby-red">Admin Dashboard</h1>
       </div>
-      <Button variant="outline" onClick={onSignOut}>Sign Out</Button>
     </div>
   );
 };
