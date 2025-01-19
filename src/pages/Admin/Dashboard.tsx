@@ -8,6 +8,7 @@ import { SubmissionDetailsDialog } from "@/components/Admin/SubmissionDetailsDia
 import { UserRolesTable } from "@/components/Admin/UserRolesTable";
 import { DashboardHeader } from "@/components/Admin/DashboardHeader";
 import { DashboardTabs } from "@/components/Admin/DashboardTabs";
+import { Settings } from "@/components/Admin/Settings";
 import { FormSubmission } from "@/types/form";
 
 const AdminDashboard = () => {
@@ -140,6 +141,11 @@ const AdminDashboard = () => {
           <UserRolesTable />
         </>
       ),
+    },
+    {
+      value: "settings",
+      label: "Settings",
+      content: <Settings />,
     },
   ];
 
