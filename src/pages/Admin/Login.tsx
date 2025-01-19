@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { AdminNavbar } from "@/components/Admin/AdminNavbar";
 
 const AdminLogin = () => {
   const navigate = useNavigate();
@@ -56,45 +57,39 @@ const AdminLogin = () => {
   }, [navigate]);
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4">
-      <div className="w-full max-w-md space-y-4">
-        <div className="flex flex-row-reverse justify-between items-center">
+    <div className="min-h-screen bg-background">
+      <AdminNavbar />
+      <div className="pt-24 flex items-center justify-center p-4">
+        <div className="w-full max-w-md space-y-4">
           <div className="space-y-2">
             <h1 className="text-2xl font-bold text-ruby-red">Admin Access</h1>
             <p className="text-muted-foreground">Sign in to access the admin dashboard</p>
           </div>
-          <Link to="/" className="hover:opacity-80 transition-opacity">
-            <img 
-              src="/lovable-uploads/77ce0bf0-17d7-43e2-b81f-3a314b8484c0.png"
-              alt="Ruby Logo"
-              className="h-12"
-            />
-          </Link>
-        </div>
 
-        {errorMessage && (
-          <Alert variant="destructive">
-            <AlertDescription>{errorMessage}</AlertDescription>
-          </Alert>
-        )}
+          {errorMessage && (
+            <Alert variant="destructive">
+              <AlertDescription>{errorMessage}</AlertDescription>
+            </Alert>
+          )}
 
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <Auth
-            supabaseClient={supabase}
-            appearance={{
-              theme: ThemeSupa,
-              variables: {
-                default: {
-                  colors: {
-                    brand: '#E31C58',
-                    brandAccent: '#C4184E',
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <Auth
+              supabaseClient={supabase}
+              appearance={{
+                theme: ThemeSupa,
+                variables: {
+                  default: {
+                    colors: {
+                      brand: '#E31C58',
+                      brandAccent: '#C4184E',
+                    },
                   },
                 },
-              },
-            }}
-            providers={[]}
-            theme="light"
-          />
+              }}
+              providers={[]}
+              theme="light"
+            />
+          </div>
         </div>
       </div>
     </div>

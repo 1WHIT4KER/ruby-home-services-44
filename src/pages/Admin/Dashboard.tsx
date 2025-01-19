@@ -10,6 +10,7 @@ import { DashboardHeader } from "@/components/Admin/DashboardHeader";
 import { DashboardTabs } from "@/components/Admin/DashboardTabs";
 import { Settings } from "@/components/Admin/Settings";
 import { FormSubmission } from "@/types/form";
+import { AdminNavbar } from "@/components/Admin/AdminNavbar";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -150,22 +151,25 @@ const AdminDashboard = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background p-6">
-      <div className="max-w-7xl mx-auto space-y-6">
-        <DashboardHeader onSignOut={handleSignOut} />
-        <DashboardTabs tabs={dashboardTabs} />
-      </div>
+    <div className="min-h-screen bg-background">
+      <AdminNavbar />
+      <div className="pt-24 px-6">
+        <div className="max-w-7xl mx-auto space-y-6">
+          <DashboardHeader onSignOut={handleSignOut} />
+          <DashboardTabs tabs={dashboardTabs} />
+        </div>
 
-      <SubmissionDetailsDialog
-        submission={selectedSubmission}
-        open={!!selectedSubmission}
-        onOpenChange={(open) => !open && setSelectedSubmission(null)}
-        notes={notes}
-        status={status}
-        onNotesChange={setNotes}
-        onStatusChange={setStatus}
-        onUpdate={handleUpdateSubmission}
-      />
+        <SubmissionDetailsDialog
+          submission={selectedSubmission}
+          open={!!selectedSubmission}
+          onOpenChange={(open) => !open && setSelectedSubmission(null)}
+          notes={notes}
+          status={status}
+          onNotesChange={setNotes}
+          onStatusChange={setStatus}
+          onUpdate={handleUpdateSubmission}
+        />
+      </div>
     </div>
   );
 };
