@@ -58,7 +58,7 @@ const AdminLogin = () => {
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="w-full max-w-md space-y-4">
-        <div className="flex justify-between items-center">
+        <div className="flex flex-row-reverse justify-between items-center">
           <div className="space-y-2">
             <h1 className="text-2xl font-bold text-ruby-red">Admin Access</h1>
             <p className="text-muted-foreground">Sign in to access the admin dashboard</p>
