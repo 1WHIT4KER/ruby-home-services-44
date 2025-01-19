@@ -25,7 +25,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
+import { Analytics } from "@/components/Admin/Analytics";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface FormSubmission {
   id: string;
@@ -157,47 +159,62 @@ const AdminDashboard = () => {
           <Button variant="outline" onClick={handleSignOut}>Sign Out</Button>
         </div>
 
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h2 className="text-xl font-semibold mb-4">Recent Form Submissions</h2>
-          <div className="overflow-x-auto">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Date</TableHead>
-                  <TableHead>Name</TableHead>
-                  <TableHead>Email</TableHead>
-                  <TableHead>Phone</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Appointment</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {submissions.map((submission) => (
-                  <TableRow 
-                    key={submission.id}
-                    className="cursor-pointer hover:bg-muted"
-                    onClick={() => handleRowClick(submission)}
-                  >
-                    <TableCell>{formatDate(submission.created_at)}</TableCell>
-                    <TableCell>
-                      {submission.first_name} {submission.last_name}
-                    </TableCell>
-                    <TableCell>{submission.email}</TableCell>
-                    <TableCell>{submission.phone}</TableCell>
-                    <TableCell>
-                      <span className="capitalize">{submission.status}</span>
-                    </TableCell>
-                    <TableCell>
-                      {submission.appointment_date 
-                        ? formatDate(submission.appointment_date)
-                        : 'Not scheduled'}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        </div>
+        <Tabs defaultValue="submissions" className="w-full">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="submissions">Form Submissions</TabsTrigger>
+            <TabsTrigger value="analytics">Analytics</TabsTrigger>
+          </TabsList>
+          
+          <TabsContent value="submissions">
+            <div className="bg-white rounded-lg shadow-md p-6">
+              <h2 className="text-xl font-semibold mb-4">Recent Form Submissions</h2>
+              <div className="overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Date</TableHead>
+                      <TableHead>Name</TableHead>
+                      <TableHead>Email</TableHead>
+                      <TableHead>Phone</TableHead>
+                      <TableHead>Status</TableHead>
+                      <TableHead>Appointment</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {submissions.map((submission) => (
+                      <TableRow 
+                        key={submission.id}
+                        className="cursor-pointer hover:bg-muted"
+                        onClick={() => handleRowClick(submission)}
+                      >
+                        <TableCell>{formatDate(submission.created_at)}</TableCell>
+                        <TableCell>
+                          {submission.first_name} {submission.last_name}
+                        </TableCell>
+                        <TableCell>{submission.email}</TableCell>
+                        <TableCell>{submission.phone}</TableCell>
+                        <TableCell>
+                          <span className="capitalize">{submission.status}</span>
+                        </TableCell>
+                        <TableCell>
+                          {submission.appointment_date 
+                            ? formatDate(submission.appointment_date)
+                            : 'Not scheduled'}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+            </div>
+          </TabsContent>
+          
+          <TabsContent value="analytics">
+            <div className="bg-white rounded-lg shadow-md p-6">
+              <Analytics />
+            </div>
+          </TabsContent>
+        </Tabs>
       </div>
 
       <Dialog open={!!selectedSubmission} onOpenChange={(open) => !open && setSelectedSubmission(null)}>
