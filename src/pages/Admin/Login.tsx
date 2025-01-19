@@ -2,7 +2,7 @@ import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const AdminLogin = () => {
@@ -58,9 +58,18 @@ const AdminLogin = () => {
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="w-full max-w-md space-y-4">
-        <div className="text-center space-y-2">
-          <h1 className="text-2xl font-bold text-ruby-red">Admin Access</h1>
-          <p className="text-muted-foreground">Sign in to access the admin dashboard</p>
+        <div className="flex justify-between items-center">
+          <div className="space-y-2">
+            <h1 className="text-2xl font-bold text-ruby-red">Admin Access</h1>
+            <p className="text-muted-foreground">Sign in to access the admin dashboard</p>
+          </div>
+          <Link to="/" className="hover:opacity-80 transition-opacity">
+            <img 
+              src="/lovable-uploads/77ce0bf0-17d7-43e2-b81f-3a314b8484c0.png"
+              alt="Ruby Logo"
+              className="h-12"
+            />
+          </Link>
         </div>
 
         {errorMessage && (
