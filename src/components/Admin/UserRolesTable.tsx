@@ -16,6 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { User } from "@supabase/supabase-js";
 
 interface UserRole {
   id: string;
@@ -42,14 +43,17 @@ export const UserRolesTable = () => {
 
       if (rolesError) throw rolesError;
 
-      // Get user emails from auth.users through the admin dashboard
-      const { data: authUsers, error: authError } = await supabase.auth.admin.listUsers();
+      // Get user emails from auth.users
+      const { data: authData, error: authError } = await supabase.auth.admin.listUsers();
       
       if (authError) throw authError;
 
+      // Properly type the auth users data
+      const authUsers: User[] = authData?.users || [];
+
       const usersWithRoles = userRoles?.map(role => ({
         ...role,
-        email: authUsers.users.find(user => user.id === role.user_id)?.email || 'Unknown'
+        email: authUsers.find(user => user.id === role.user_id)?.email || 'Unknown'
       }));
 
       console.log('Users fetched:', usersWithRoles);
