@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export const AdminNavbar = () => {
   return (
-    <nav className="fixed w-full top-0 z-50 bg-background border-b">
+    <nav className="fixed w-full top-0 z-50 bg-background">
       <div className="container mx-auto px-4 py-2">
         <Link to="/" className="hover:opacity-80 transition-opacity">
           <img 
