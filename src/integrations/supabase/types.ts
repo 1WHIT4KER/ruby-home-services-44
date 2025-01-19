@@ -9,6 +9,36 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      admin_invitations: {
+        Row: {
+          created_at: string | null
+          created_by: string | null
+          email: string
+          expires_at: string | null
+          id: string
+          status: string | null
+          token: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          created_by?: string | null
+          email: string
+          expires_at?: string | null
+          id?: string
+          status?: string | null
+          token?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          created_by?: string | null
+          email?: string
+          expires_at?: string | null
+          id?: string
+          status?: string | null
+          token?: string | null
+        }
+        Relationships: []
+      }
       app_settings: {
         Row: {
           auto_assign_leads: boolean | null

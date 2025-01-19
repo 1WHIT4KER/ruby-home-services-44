@@ -12,7 +12,7 @@ interface DashboardTabsProps {
 export const DashboardTabs = ({ tabs }: DashboardTabsProps) => {
   return (
     <Tabs defaultValue={tabs[0].value} className="space-y-4">
-      <TabsList>
+      <TabsList className="w-full justify-start">
         {tabs.map((tab) => (
           <TabsTrigger key={tab.value} value={tab.value}>
             {tab.label}

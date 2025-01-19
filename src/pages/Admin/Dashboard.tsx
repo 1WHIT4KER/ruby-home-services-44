@@ -9,6 +9,7 @@ import { UserRolesTable } from "@/components/Admin/UserRolesTable";
 import { DashboardHeader } from "@/components/Admin/DashboardHeader";
 import { DashboardTabs } from "@/components/Admin/DashboardTabs";
 import { Settings } from "@/components/Admin/Settings";
+import { InvitationManagement } from "@/components/Admin/InvitationManagement";
 import { FormSubmission } from "@/types/form";
 import { AdminNavbar } from "@/components/Admin/AdminNavbar";
 
@@ -142,6 +143,11 @@ const AdminDashboard = () => {
           <UserRolesTable />
         </>
       ),
+    },
+    {
+      value: "invitations",
+      label: "Admin Invitations",
+      content: <InvitationManagement />,
     },
     {
       value: "settings",
