@@ -11,44 +11,74 @@ const AdminLogin = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
-    // Check if user is already logged in
     const checkUser = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session) {
-        // Check if user is an admin
-        const { data: roles } = await supabase
-          .from('user_roles')
-          .select('role')
-          .eq('user_id', session.user.id)
-          .single();
+      try {
+        console.log("Checking user session...");
+        const { data: { session } } = await supabase.auth.getSession();
+        
+        if (session) {
+          console.log("User is logged in, checking admin role...");
+          const { data: roles, error: rolesError } = await supabase
+            .from('user_roles')
+            .select('role')
+            .eq('user_id', session.user.id)
+            .single();
 
-        if (roles?.role === 'admin') {
-          navigate('/admin/dashboard');
-        } else {
-          setErrorMessage("You don't have permission to access this area.");
-          await supabase.auth.signOut();
+          console.log("Roles query result:", { roles, rolesError });
+
+          if (rolesError) {
+            console.error("Error fetching roles:", rolesError);
+            setErrorMessage("Error checking permissions. Please try again.");
+            return;
+          }
+
+          if (roles?.role === 'admin') {
+            console.log("User is admin, redirecting to dashboard...");
+            navigate('/admin/dashboard');
+          } else {
+            console.log("User is not admin:", roles);
+            setErrorMessage("You don't have permission to access this area.");
+            await supabase.auth.signOut();
+          }
         }
+      } catch (error) {
+        console.error("Error in checkUser:", error);
+        setErrorMessage("An unexpected error occurred. Please try again.");
       }
     };
 
     checkUser();
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
-      if (event === 'SIGNED_IN') {
-        // Check if the signed-in user is an admin
-        if (session) {
-          const { data: roles } = await supabase
+      console.log("Auth state changed:", event, session?.user?.id);
+      
+      if (event === 'SIGNED_IN' && session) {
+        try {
+          const { data: roles, error: rolesError } = await supabase
             .from('user_roles')
             .select('role')
             .eq('user_id', session.user.id)
             .single();
 
+          console.log("Roles after sign in:", { roles, rolesError });
+
+          if (rolesError) {
+            console.error("Error fetching roles after sign in:", rolesError);
+            setErrorMessage("Error checking permissions. Please try again.");
+            return;
+          }
+
           if (roles?.role === 'admin') {
+            console.log("User is admin, redirecting to dashboard...");
             navigate('/admin/dashboard');
           } else {
+            console.log("User is not admin:", roles);
             setErrorMessage("You don't have permission to access this area.");
             await supabase.auth.signOut();
           }
+        } catch (error) {
+          console.error("Error in auth state change handler:", error);
+          setErrorMessage("An unexpected error occurred. Please try again.");
         }
       }
     });
