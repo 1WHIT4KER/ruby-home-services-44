@@ -7,6 +7,7 @@ import { Analytics } from "@/components/Admin/Analytics";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SubmissionsTable } from "@/components/Admin/SubmissionsTable";
 import { SubmissionDetailsDialog } from "@/components/Admin/SubmissionDetailsDialog";
+import { UserRolesTable } from "@/components/Admin/UserRolesTable";
 import { FormSubmission } from "@/types/form";
 
 const AdminDashboard = () => {
@@ -120,9 +121,10 @@ const AdminDashboard = () => {
         </div>
 
         <Tabs defaultValue="submissions" className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
+          <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="submissions">Form Submissions</TabsTrigger>
             <TabsTrigger value="analytics">Analytics</TabsTrigger>
+            <TabsTrigger value="users">User Management</TabsTrigger>
           </TabsList>
           
           <TabsContent value="submissions">
@@ -138,6 +140,13 @@ const AdminDashboard = () => {
           <TabsContent value="analytics">
             <div className="bg-white rounded-lg shadow-md p-6">
               <Analytics />
+            </div>
+          </TabsContent>
+
+          <TabsContent value="users">
+            <div className="bg-white rounded-lg shadow-md p-6">
+              <h2 className="text-xl font-semibold mb-4">User Role Management</h2>
+              <UserRolesTable />
             </div>
           </TabsContent>
         </Tabs>
