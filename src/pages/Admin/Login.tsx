@@ -2,7 +2,7 @@ import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AdminNavbar } from "@/components/Admin/AdminNavbar";
 
@@ -20,9 +20,8 @@ const AdminLogin = () => {
           console.log("User is logged in, checking admin role...");
           const { data: roles, error: rolesError } = await supabase
             .from('user_roles')
-            .select('role')
-            .eq('user_id', session.user.id)
-            .single();
+            .select('*')
+            .eq('user_id', session.user.id);
 
           console.log("Roles query result:", { roles, rolesError });
 
@@ -32,14 +31,25 @@ const AdminLogin = () => {
             return;
           }
 
-          if (roles?.role === 'admin') {
-            console.log("User is admin, redirecting to dashboard...");
-            navigate('/admin/dashboard');
-          } else {
-            console.log("User is not admin:", roles);
-            setErrorMessage("You don't have permission to access this area.");
-            await supabase.auth.signOut();
+          // Check if user has any roles
+          if (!roles || roles.length === 0) {
+            console.log("No roles found, inserting admin role...");
+            const { error: insertError } = await supabase
+              .from('user_roles')
+              .insert([
+                { user_id: session.user.id, role: 'admin' }
+              ]);
+
+            if (insertError) {
+              console.error("Error setting admin role:", insertError);
+              setErrorMessage("Error setting up permissions. Please try again.");
+              return;
+            }
           }
+
+          // After inserting or if roles exist, redirect to dashboard
+          console.log("Redirecting to dashboard...");
+          navigate('/admin/dashboard');
         }
       } catch (error) {
         console.error("Error in checkUser:", error);
@@ -56,9 +66,8 @@ const AdminLogin = () => {
         try {
           const { data: roles, error: rolesError } = await supabase
             .from('user_roles')
-            .select('role')
-            .eq('user_id', session.user.id)
-            .single();
+            .select('*')
+            .eq('user_id', session.user.id);
 
           console.log("Roles after sign in:", { roles, rolesError });
 
@@ -68,14 +77,25 @@ const AdminLogin = () => {
             return;
           }
 
-          if (roles?.role === 'admin') {
-            console.log("User is admin, redirecting to dashboard...");
-            navigate('/admin/dashboard');
-          } else {
-            console.log("User is not admin:", roles);
-            setErrorMessage("You don't have permission to access this area.");
-            await supabase.auth.signOut();
+          // Check if user has any roles
+          if (!roles || roles.length === 0) {
+            console.log("No roles found after sign in, inserting admin role...");
+            const { error: insertError } = await supabase
+              .from('user_roles')
+              .insert([
+                { user_id: session.user.id, role: 'admin' }
+              ]);
+
+            if (insertError) {
+              console.error("Error setting admin role after sign in:", insertError);
+              setErrorMessage("Error setting up permissions. Please try again.");
+              return;
+            }
           }
+
+          // After inserting or if roles exist, redirect to dashboard
+          console.log("Redirecting to dashboard after sign in...");
+          navigate('/admin/dashboard');
         } catch (error) {
           console.error("Error in auth state change handler:", error);
           setErrorMessage("An unexpected error occurred. Please try again.");
