@@ -11,6 +11,21 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { format } from "date-fns";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useToast } from "@/components/ui/use-toast";
 
 interface FormSubmission {
   id: string;
@@ -21,12 +36,21 @@ interface FormSubmission {
   phone: string;
   status: string;
   appointment_date: string | null;
+  notes: string | null;
+  address: string;
+  screen_cleaning: boolean;
+  exterior_power_washing: boolean;
+  gutter_cleaning: boolean;
 }
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [loading, setLoading] = useState(true);
   const [submissions, setSubmissions] = useState<FormSubmission[]>([]);
+  const [selectedSubmission, setSelectedSubmission] = useState<FormSubmission | null>(null);
+  const [notes, setNotes] = useState("");
+  const [status, setStatus] = useState("");
 
   useEffect(() => {
     const checkAdmin = async () => {
@@ -79,6 +103,44 @@ const AdminDashboard = () => {
     return format(new Date(dateString), "MMM d, yyyy 'at' h:mm a");
   };
 
+  const handleRowClick = (submission: FormSubmission) => {
+    setSelectedSubmission(submission);
+    setNotes(submission.notes || "");
+    setStatus(submission.status);
+  };
+
+  const handleUpdateSubmission = async () => {
+    if (!selectedSubmission) return;
+
+    try {
+      const { error } = await supabase
+        .from('form_submissions')
+        .update({
+          notes,
+          status,
+          viewed_at: new Date().toISOString(),
+        })
+        .eq('id', selectedSubmission.id);
+
+      if (error) throw error;
+
+      toast({
+        title: "Success",
+        description: "Submission updated successfully",
+      });
+
+      fetchSubmissions();
+      setSelectedSubmission(null);
+    } catch (error) {
+      console.error('Error updating submission:', error);
+      toast({
+        title: "Error",
+        description: "Failed to update submission",
+        variant: "destructive",
+      });
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -111,7 +173,11 @@ const AdminDashboard = () => {
               </TableHeader>
               <TableBody>
                 {submissions.map((submission) => (
-                  <TableRow key={submission.id}>
+                  <TableRow 
+                    key={submission.id}
+                    className="cursor-pointer hover:bg-muted"
+                    onClick={() => handleRowClick(submission)}
+                  >
                     <TableCell>{formatDate(submission.created_at)}</TableCell>
                     <TableCell>
                       {submission.first_name} {submission.last_name}
@@ -133,6 +199,67 @@ const AdminDashboard = () => {
           </div>
         </div>
       </div>
+
+      <Dialog open={!!selectedSubmission} onOpenChange={(open) => !open && setSelectedSubmission(null)}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Submission Details</DialogTitle>
+          </DialogHeader>
+          
+          {selectedSubmission && (
+            <div className="space-y-6">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <h3 className="font-semibold mb-2">Contact Information</h3>
+                  <p>Name: {selectedSubmission.first_name} {selectedSubmission.last_name}</p>
+                  <p>Email: {selectedSubmission.email}</p>
+                  <p>Phone: {selectedSubmission.phone}</p>
+                  <p>Address: {selectedSubmission.address}</p>
+                </div>
+                <div>
+                  <h3 className="font-semibold mb-2">Services Requested</h3>
+                  <ul className="list-disc list-inside">
+                    {selectedSubmission.screen_cleaning && <li>Screen Cleaning</li>}
+                    {selectedSubmission.exterior_power_washing && <li>Exterior Power Washing</li>}
+                    {selectedSubmission.gutter_cleaning && <li>Gutter Cleaning</li>}
+                  </ul>
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium mb-1">Status</label>
+                  <Select value={status} onValueChange={setStatus}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="new">New</SelectItem>
+                      <SelectItem value="in-progress">In Progress</SelectItem>
+                      <SelectItem value="completed">Completed</SelectItem>
+                      <SelectItem value="cancelled">Cancelled</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-1">Notes</label>
+                  <Textarea
+                    value={notes}
+                    onChange={(e) => setNotes(e.target.value)}
+                    placeholder="Add notes about this submission..."
+                    className="h-32"
+                  />
+                </div>
+
+                <Button onClick={handleUpdateSubmission} className="w-full">
+                  Update Submission
+                </Button>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
