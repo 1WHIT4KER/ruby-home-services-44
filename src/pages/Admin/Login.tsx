@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
-import { AuthError } from "@supabase/supabase-js";
+import { AuthError, AuthApiError } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AdminNavbar } from "@/components/Admin/AdminNavbar";
@@ -15,7 +15,26 @@ const AdminLogin = () => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       console.log("Auth state changed:", event, session);
       if (event === 'USER_UPDATED') {
-        setAuthError("");
+        const handleAuthError = async () => {
+          const { error } = await supabase.auth.getSession();
+          if (error) {
+            if (error instanceof AuthApiError) {
+              switch (error.code) {
+                case 'invalid_credentials':
+                  setAuthError("Invalid email or password. Please check your credentials and try again.");
+                  break;
+                case 'email_not_confirmed':
+                  setAuthError("Please verify your email address before signing in.");
+                  break;
+                default:
+                  setAuthError(error.message);
+              }
+            } else {
+              setAuthError(error.message);
+            }
+          }
+        };
+        handleAuthError();
       }
       if (event === 'SIGNED_OUT') {
         setAuthError("");
@@ -57,16 +76,6 @@ const AdminLogin = () => {
               }}
               providers={[]}
               theme="light"
-              onError={(error: AuthError) => {
-                console.error("Auth error:", error);
-                if (error.message.includes("invalid_credentials")) {
-                  setAuthError("Invalid email or password. Please check your credentials and try again.");
-                } else if (error.message.includes("Email not confirmed")) {
-                  setAuthError("Please verify your email address before signing in.");
-                } else {
-                  setAuthError(error.message);
-                }
-              }}
             />
           </div>
 
