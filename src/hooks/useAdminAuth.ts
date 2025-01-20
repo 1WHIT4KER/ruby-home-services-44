@@ -9,15 +9,19 @@ export const useAdminAuth = () => {
   const setupAdminRole = async (userId: string) => {
     console.log("Setting up admin role for user:", userId);
     try {
-      const { error: insertError } = await supabase
+      const { data, error: insertError } = await supabase
         .from('user_roles')
-        .insert([{ user_id: userId, role: 'admin' }]);
+        .insert([{ user_id: userId, role: 'admin' }])
+        .select()
+        .single();
 
       if (insertError) {
         console.error("Error setting admin role:", insertError);
         throw new Error("Error setting up permissions");
       }
-      console.log("Successfully set up admin role for user:", userId);
+      
+      console.log("Successfully set up admin role for user:", userId, "Data:", data);
+      return data;
     } catch (error) {
       console.error("Error in setupAdminRole:", error);
       throw error;
@@ -31,6 +35,7 @@ export const useAdminAuth = () => {
         .from('user_roles')
         .select('*')
         .eq('user_id', userId)
+        .eq('role', 'admin')
         .maybeSingle();
 
       if (rolesError) {
@@ -39,11 +44,12 @@ export const useAdminAuth = () => {
       }
 
       if (!roles) {
-        console.log("No role found, setting up admin role");
-        await setupAdminRole(userId);
-      } else {
-        console.log("Found existing role:", roles);
+        console.log("No admin role found, setting up admin role");
+        return await setupAdminRole(userId);
       }
+      
+      console.log("Found existing admin role:", roles);
+      return roles;
     } catch (error) {
       console.error("Error in checkAndSetupAdminRole:", error);
       throw error;
@@ -58,13 +64,21 @@ export const useAdminAuth = () => {
         const { data: { session } } = await supabase.auth.getSession();
         console.log("Current session:", session);
         
-        if (session && isSubscribed) {
-          await checkAndSetupAdminRole(session.user.id);
-          console.log("Admin role check complete, redirecting to dashboard");
-          navigate('/admin/dashboard');
-        } else if (!session && isSubscribed) {
+        if (!session) {
           console.log("No active session found");
-          navigate('/admin');
+          if (isSubscribed) navigate('/admin');
+          return;
+        }
+
+        if (isSubscribed) {
+          const role = await checkAndSetupAdminRole(session.user.id);
+          if (role) {
+            console.log("Admin role confirmed, redirecting to dashboard");
+            navigate('/admin/dashboard');
+          } else {
+            console.log("No admin role found after check");
+            navigate('/admin');
+          }
         }
       } catch (error) {
         console.error("Error in checkSession:", error);
@@ -82,9 +96,14 @@ export const useAdminAuth = () => {
       
       if (event === 'SIGNED_IN' && session && isSubscribed) {
         try {
-          await checkAndSetupAdminRole(session.user.id);
-          console.log("Admin role check complete after sign in, redirecting to dashboard");
-          navigate('/admin/dashboard');
+          const role = await checkAndSetupAdminRole(session.user.id);
+          if (role) {
+            console.log("Admin role confirmed after sign in, redirecting to dashboard");
+            navigate('/admin/dashboard');
+          } else {
+            console.log("No admin role found after sign in");
+            navigate('/admin');
+          }
         } catch (error) {
           console.error("Error in auth state change handler:", error);
           if (isSubscribed) {
