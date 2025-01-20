@@ -17,6 +17,7 @@ export const useAdminAuth = () => {
       console.error("Error setting admin role:", insertError);
       throw new Error("Error setting up permissions");
     }
+    console.log("Successfully set up admin role for user:", userId);
   };
 
   const checkAndSetupAdminRole = async (userId: string) => {
@@ -24,15 +25,24 @@ export const useAdminAuth = () => {
     const { data: roles, error: rolesError } = await supabase
       .from('user_roles')
       .select('*')
-      .eq('user_id', userId);
+      .eq('user_id', userId)
+      .single();
 
     if (rolesError) {
       console.error("Error fetching roles:", rolesError);
-      throw new Error("Error checking permissions");
+      if (rolesError.code === 'PGRST116') {
+        console.log("No role found, setting up admin role");
+        await setupAdminRole(userId);
+      } else {
+        throw new Error("Error checking permissions");
+      }
     }
 
-    if (!roles || roles.length === 0) {
+    if (!roles) {
+      console.log("No role found, setting up admin role");
       await setupAdminRole(userId);
+    } else {
+      console.log("Found existing role:", roles);
     }
   };
 
@@ -40,10 +50,14 @@ export const useAdminAuth = () => {
     const checkSession = async () => {
       try {
         const { data: { session } } = await supabase.auth.getSession();
+        console.log("Current session:", session);
         
         if (session) {
           await checkAndSetupAdminRole(session.user.id);
+          console.log("Admin role check complete, redirecting to dashboard");
           navigate('/admin/dashboard');
+        } else {
+          console.log("No active session found");
         }
       } catch (error) {
         console.error("Error in checkSession:", error);
@@ -59,6 +73,7 @@ export const useAdminAuth = () => {
       if (event === 'SIGNED_IN' && session) {
         try {
           await checkAndSetupAdminRole(session.user.id);
+          console.log("Admin role check complete after sign in, redirecting to dashboard");
           navigate('/admin/dashboard');
         } catch (error) {
           console.error("Error in auth state change handler:", error);
