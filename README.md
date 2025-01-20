@@ -103,12 +103,6 @@ The Supabase database includes the following tables:
 4. Implement proper error handling
 5. Follow established component structure
 
-## Deployment
-The project can be deployed through:
-1. Lovable's built-in deployment
-2. Manual deployment to custom domains via Netlify
-3. GitHub repository integration
-
 ## Project Structure
 ```
 src/
